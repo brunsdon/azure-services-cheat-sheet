@@ -14,6 +14,10 @@ This repository is written for developers, integration specialists, solution
 architects, technical leads, and Dynamics 365 / Power Platform professionals
 who need clear service selection guidance without marketing noise.
 
+Built from real-world delivery experience across Australian Federal Government,
+enterprise integration projects, Dynamics 365 platforms, Dataverse
+integrations, and Azure-native architectures.
+
 ## Why This Repo Exists
 
 Azure has many overlapping services. The hard part is rarely finding a service
@@ -27,6 +31,7 @@ This cheat sheet focuses on production-minded decisions:
 - What usually goes wrong.
 - How to secure and monitor it.
 - How it fits into integration-heavy enterprise systems.
+- What I would usually choose in 2026 for common architecture problems.
 
 ## Who This Is For
 
@@ -36,7 +41,22 @@ This cheat sheet focuses on production-minded decisions:
 | Solution architects | Decision tables, trade-offs, diagrams, and architecture patterns. |
 | Technical leads | Delivery checklists, production gotchas, and operational review points. |
 | Dynamics 365 / Power Platform developers | Dataverse integration guidance using Service Bus, Functions, Logic Apps, and API Management. |
-| Recruiters and managers | A quick view of hands-on Azure integration, architecture, and delivery knowledge. |
+| Recruiters and managers | A quick view of hands-on Azure integration, architecture, and delivery judgement. |
+
+## For Recruiters, Managers And Technical Leads
+
+This repo demonstrates:
+
+- Azure service selection judgement.
+- Practical integration architecture.
+- Secure cloud design awareness.
+- Event-driven architecture understanding.
+- DevOps and production-readiness thinking.
+- Ability to explain complex services clearly.
+
+It positions the author as a senior Azure integration developer, Dynamics 365 /
+Power Platform integration specialist, .NET and Azure architecture practitioner,
+and enterprise delivery-focused engineer.
 
 ## 🧭 Fast Path: Choosing The Right Azure Service
 
@@ -54,6 +74,14 @@ This cheat sheet focuses on production-minded decisions:
 | Observe production behavior | Application Insights | Use Log Analytics for cross-resource KQL and diagnostic logs. |
 
 See the full [Service Selection Guide](docs/service-selection-guide.md).
+
+## Production Readiness
+
+Use the [Production Readiness Checklist](docs/production-readiness-checklist.md)
+before moving an Azure workload into production.
+
+It covers identity, secrets, networking, messaging, APIs, storage, monitoring,
+CI/CD, resilience, cost control, documentation, and support handover.
 
 ## Real-World Azure Integration Focus
 
@@ -89,6 +117,18 @@ in enterprise delivery:
 | Containerized worker platform | Container Apps, Service Bus scaler, Managed Identity, Key Vault, Log Analytics | Good balance between container packaging and low platform overhead. |
 | Enterprise API platform | Front Door or Application Gateway, API Management, App Service, Private Endpoints, App Insights | Provides ingress, governance, private backends, and telemetry. |
 
+## Architecture Recipes
+
+Practical implementation recipes live in [recipes](recipes/README.md).
+
+Featured recipes:
+
+- [Public API to Service Bus](recipes/public-api-to-service-bus.md)
+- [Dataverse to Service Bus](recipes/dataverse-to-service-bus.md)
+- [Blob Claim-Check Pattern](recipes/blob-claim-check-pattern.md)
+- [DMZ-Safe Document Ingestion](recipes/dmz-safe-document-ingestion.md)
+- [Enterprise Secure Integration Stack](recipes/enterprise-secure-integration-stack.md)
+
 ## Recruiter / Manager Quick Summary
 
 This repository demonstrates practical knowledge across:
@@ -101,6 +141,20 @@ This repository demonstrates practical knowledge across:
 - Dynamics 365 / Dataverse integration and enterprise application integration.
 - Security, cost, scalability, monitoring, deployment, and production support
   considerations.
+
+## Production Lessons This Repo Emphasizes
+
+- If message ordering matters, unrestricted parallel consumers will eventually
+  create reconciliation issues unless sessions or another ordering strategy are
+  used.
+- If there is no DLQ alert, failed integration work is silently becoming support
+  debt.
+- If correlation IDs stop at the API boundary, production incidents become
+  guesswork.
+- If secrets live in appsettings or pipelines, rotation becomes a release
+  project instead of an operational task.
+- If private endpoints are added without DNS planning, the outage will look like
+  an application problem.
 
 ## 🏗️ Featured Architecture Patterns
 
@@ -149,6 +203,8 @@ flowchart LR
 5. Add security depth with [Identity & Security](docs/identity-security.md).
 6. Add delivery maturity with [DevOps](docs/devops.md).
 7. Use [Gotchas](docs/gotchas.md) as a pre-production review checklist.
+8. Use [Architecture Recipes](recipes/README.md) for real implementation shapes.
+9. Use [Production Readiness](docs/production-readiness-checklist.md) before go-live.
 
 ## Docs
 
@@ -164,8 +220,11 @@ flowchart LR
 - [DevOps](docs/devops.md)
 - [Architecture Patterns](docs/architecture-patterns.md)
 - [Service Selection Guide](docs/service-selection-guide.md)
+- [Production Readiness Checklist](docs/production-readiness-checklist.md)
+- [Promotion Notes](docs/promotion-notes.md)
 - [Gotchas](docs/gotchas.md)
 - [Diagrams](diagrams/README.md)
+- [Architecture Recipes](recipes/README.md)
 
 ## Snippets
 
@@ -197,6 +256,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 - [Power Platform Integration Patterns](https://github.com/brunsdon/power-platform-integration-patterns)
 - [Power Pages Cheat Sheet](https://github.com/brunsdon/power-pages-cheat-sheet)
 - [Dataverse Schema Design Guide](https://github.com/brunsdon/dataverse-schema-design-guide)
+
+## Suggested GitHub Topics
+
+`azure`, `azure-functions`, `azure-service-bus`, `azure-architecture`,
+`cloud-architecture`, `dotnet`, `integration-patterns`, `azure-devops`,
+`api-management`, `event-driven-architecture`, `service-bus`, `serverless`,
+`cloud-native`, `microservices`, `power-platform`, `dynamics365`
 
 ## Author
 

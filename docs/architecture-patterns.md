@@ -21,6 +21,25 @@ enterprise application integration.
 | Distributed tracing | Work crosses APIs, queues, and workers | Application Insights, Log Analytics |
 | Event-driven microservices | Services react independently to business events | Service Bus Topics, Event Grid |
 
+## Production Lessons Learned
+
+- Async architecture without correlation IDs becomes hard to support quickly.
+- Queue boundaries improve resilience only when DLQs, replay, and idempotency
+  are designed.
+- Private endpoints improve security, but DNS ownership becomes critical.
+- Event-driven systems need schema versioning before the second consumer arrives.
+- Diagrams should include monitoring and support paths, not only happy-path data
+  flow.
+
+## Anti-Patterns To Avoid
+
+- "Everything calls everything" synchronous integration.
+- Business-critical queues with no DLQ alert.
+- Large documents embedded directly into messages.
+- API gateways used to hide unstable backend contracts.
+- One shared managed identity or connection string for every component.
+- Production workflows that can only be understood from the portal.
+
 ## API Management To Functions To Service Bus
 
 Use this when an external or internal API needs a clean contract but the actual
@@ -297,6 +316,17 @@ sequenceDiagram
 - API Management, private networking, and Premium plans add baseline cost.
 - Over-instrumentation can make Log Analytics expensive.
 - Async designs can reduce peak compute cost by smoothing workloads.
+
+## What I Would Choose In 2026
+
+| Problem | Pattern |
+| --- | --- |
+| Slow downstream processing from an API | API Management to Function to Service Bus |
+| Dataverse integration that should not block users | Dataverse to Service Bus Topic |
+| Large document or JSON payloads | Blob claim check |
+| External document upload | DMZ-safe document ingestion |
+| Multi-consumer business events | Service Bus Topic per business event |
+| Consistent database write and publish | Outbox pattern |
 
 ## Official Docs
 

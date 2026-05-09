@@ -45,6 +45,19 @@ and workload smoothing.
 - You need long-term event replay across large streams.
 - The team has no operational plan for DLQs, retries, and poison messages.
 
+## What Breaks First In Production
+
+- DLQs grow quietly because nobody owns the alert or replay process.
+- Consumers process messages in parallel and accidentally break ordering
+  assumptions.
+- Lock duration is shorter than real processing time, causing duplicate work.
+- Retry policies hammer a throttled downstream API instead of backing off.
+- Message schemas change without versioning and older consumers fail.
+
+If message ordering matters, avoid unrestricted parallel consumers unless using
+sessions or a separate ordering strategy. Teams often discover this only after
+reconciliation or downstream processing issues appear in production.
+
 ## Core Concepts
 
 | Concept | Practical meaning |
@@ -107,6 +120,15 @@ flowchart LR
 - Watch queue length, active messages, scheduled messages, lock lost count, and
   age of oldest message.
 
+## Common Scaling Traps
+
+- Increasing `MaxConcurrentCalls` before the database or downstream API can
+  handle the load.
+- Using sessions for every message and then wondering why throughput is low.
+- Treating Service Bus as a streaming platform instead of using Event Hubs.
+- Publishing large payloads instead of using Blob Storage claim check.
+- Allowing one subscription to become a forgotten backlog.
+
 ## Security Considerations
 
 - Prefer Managed Identity and Azure RBAC over connection strings.
@@ -126,6 +148,14 @@ flowchart LR
 - Event Hubs pricing is usually better for high-volume telemetry than Service
   Bus.
 
+## Common Cost Traps
+
+- Choosing Premium too early for a low-volume workload.
+- Keeping verbose message body logs in Log Analytics.
+- Creating many subscriptions without clear owners.
+- Retrying poison messages repeatedly instead of dead-lettering them.
+- Retaining claim-check blobs longer than the replay window requires.
+
 ## Operational Gotchas
 
 - Message delivery is at-least-once. Design idempotent consumers.
@@ -134,6 +164,25 @@ flowchart LR
 - Duplicate detection only works when producers set stable `MessageId` values.
 - Poison messages are normal; build replay and triage tooling.
 - Correlation IDs must be copied into message application properties.
+
+## Anti-Patterns
+
+- Using Service Bus as a database.
+- Using Event Grid for business commands that require ordered processing.
+- Treating DLQ replay as a manual portal-only activity.
+- Publishing internal database row dumps as integration contracts.
+- Sharing one connection string across every producer and consumer.
+
+## What I Would Choose In 2026
+
+| Scenario | Choice |
+| --- | --- |
+| Business-critical async command | Service Bus Queue |
+| Durable business pub/sub | Service Bus Topic |
+| Lightweight resource notification | Event Grid |
+| High-volume telemetry stream | Event Hubs |
+| Large payload workflow | Blob Storage plus Service Bus claim check |
+| Ordered per-entity processing | Service Bus sessions with clear concurrency limits |
 
 ## Production Checklist
 

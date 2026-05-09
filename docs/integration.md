@@ -61,6 +61,15 @@ Blob Storage, Key Vault, and monitoring.
 - Do not build point-to-point integrations without ownership, retries,
   monitoring, and replay thinking.
 
+## What Breaks First In Production
+
+- Point-to-point integrations fail without a replay path.
+- API Management policies mask backend errors because diagnostics are thin.
+- Logic Apps become hard to review when business logic grows inside workflow
+  definitions.
+- Dataverse plug-ins call slow external APIs and degrade user transactions.
+- Correlation IDs are lost between API, workflow, queue, and worker.
+
 ## Typical Enterprise API Flow
 
 ```mermaid
@@ -127,6 +136,15 @@ flowchart LR
 - Protect Dataverse and downstream APIs with throttling and backoff.
 - Avoid chatty per-record calls when batch APIs are available.
 
+## Common Scaling Traps
+
+- Scaling Functions without checking downstream API limits.
+- Using Logic Apps for high-volume transformation-heavy workloads that belong
+  in code.
+- Letting Power Automate or Logic Apps trigger one flow run per record in a bulk
+  import.
+- Using synchronous HTTP chains where a queue boundary would absorb spikes.
+
 ## Cost Considerations
 
 - API Management has a tier-based baseline cost.
@@ -134,6 +152,14 @@ flowchart LR
 - Functions cost depends on plan, duration, memory, and execution count.
 - Durable Functions stores orchestration state and history.
 - Private networking and diagnostic logs can be material in enterprise setups.
+
+## Common Cost Traps
+
+- API Management tier chosen for production but left running for unused test
+  environments.
+- Logic App action count grows because loops process records one by one.
+- Verbose workflow run history captures large payloads.
+- Private endpoints and DNS zones are created broadly without ownership.
 
 ## Operational Gotchas
 
@@ -143,6 +169,25 @@ flowchart LR
 - Durable Function orchestrators must be deterministic.
 - Event Grid retries do not make it a command queue.
 - Lack of correlation IDs makes cross-service incidents painful.
+
+## Anti-Patterns
+
+- Synchronous plug-in to external API for non-critical downstream work.
+- One giant Logic App that owns every business process branch.
+- API Management policies containing business logic that should be in code.
+- Service Bus messages with unclear schema ownership.
+- No replay path for failed integration messages.
+
+## What I Would Choose In 2026
+
+| Scenario | Choice |
+| --- | --- |
+| Public enterprise API boundary | API Management |
+| Code-heavy integration handler | Azure Functions or App Service |
+| Connector-heavy workflow | Logic Apps |
+| Long-running code-first orchestration | Durable Functions |
+| Reliable async handoff | Service Bus |
+| Dataverse-to-Azure decoupling | Service Bus Topic plus Azure Function subscriber |
 
 ## Production Checklist
 

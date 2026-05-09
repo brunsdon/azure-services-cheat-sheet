@@ -46,6 +46,17 @@ traffic reaches cloud services.
 - Do not treat API Management JWT validation as a replacement for application
   authorization.
 
+## Security Mistakes To Avoid
+
+- Reusing one app registration across unrelated integrations.
+- Storing Service Bus connection strings in appsettings instead of using Managed
+  Identity.
+- Granting Contributor to runtime workloads because a narrower data-plane role
+  was not looked up.
+- Creating private endpoints without testing DNS from apps and deployment
+  agents.
+- Logging tokens, SAS URLs, message bodies, or Key Vault secret values.
+
 ## OAuth 2.0 And App Registration Notes
 
 | Scenario | Typical approach |
@@ -125,6 +136,26 @@ flowchart LR
 - App registration secrets expire silently unless monitored.
 - RBAC changes can take minutes to become effective.
 - Copying secrets into app settings creates rotation debt.
+
+## Production Lessons Learned
+
+- Managed Identity removes secret rotation work, but RBAC still needs ownership.
+- System-assigned identities are easy until a resource is replaced and the
+  object ID changes.
+- Key Vault is not a substitute for configuration design; store only secrets
+  there.
+- Private networking is a platform feature, not an application afterthought.
+- Every privileged role assignment should have a reason and an owner.
+
+## What I Would Choose In 2026
+
+| Scenario | Choice |
+| --- | --- |
+| Azure workload to Azure resource | Managed Identity |
+| Secret storage | Key Vault with RBAC |
+| Feature flags and non-secret settings | App Configuration |
+| Partner API auth | Entra app registration with OAuth 2.0 |
+| Internal PaaS connectivity | Private Endpoint where justified |
 
 ## .NET Key Vault With Managed Identity
 

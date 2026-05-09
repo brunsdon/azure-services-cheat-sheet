@@ -15,6 +15,34 @@ question is "which service should I use?"
 - Use Key Vault for secrets and App Configuration for non-secret settings.
 - Use Managed Identity whenever the workload runs in Azure.
 
+## What I Would Usually Choose
+
+| Scenario | Usual choice |
+| --- | --- |
+| Business-critical asynchronous commands | Service Bus |
+| Lightweight event notification | Event Grid |
+| High-volume telemetry stream | Event Hubs |
+| Simple HTTP integration workflow | Logic Apps |
+| Custom code integration | Azure Functions or App Service |
+| Public enterprise API boundary | API Management |
+| Relational business data | Azure SQL |
+| Globally distributed low-latency document data | Cosmos DB |
+| Secrets | Key Vault |
+| App feature/config values | App Configuration |
+| Large files or integration payloads | Blob Storage |
+| DMZ-safe document upload | Blob Storage, Event Grid, Functions, Service Bus |
+
+## Decision Scars
+
+- Do not choose Cosmos DB just because it is cloud-native. Partitioning and RU
+  cost need to be understood first.
+- Do not choose Functions for long-running stateful workflows unless Durable
+  Functions is the intended model.
+- Do not choose Service Bus for high-volume telemetry streams. Use Event Hubs.
+- Do not choose Event Grid when guaranteed ordered processing is required.
+- Do not choose Logic Apps when complex custom code and testability are central.
+- Do not choose AKS unless the team is ready to operate Kubernetes.
+
 ## I Need To Run Code
 
 | Need | Choose | Why |

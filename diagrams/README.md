@@ -89,3 +89,30 @@ flowchart LR
     crm --> appi
     reporting --> appi
 ```
+
+## Low-Cost Azure App Architecture
+
+```mermaid
+flowchart LR
+    user[Users] --> app[App Service]
+    app --> sql[(Azure SQL)]
+    app --> blob[(Blob Storage)]
+    timer[Timer Function] --> sql
+    app --> keyvault[Key Vault]
+    app --> insights[Application Insights]
+    timer --> insights
+```
+
+## Enterprise Secure Integration Architecture
+
+```mermaid
+flowchart LR
+    consumer[Consumer / Partner] --> waf[Front Door or App Gateway WAF]
+    waf --> apim[API Management]
+    apim --> api[Private API Backend]
+    api --> bus[Service Bus Premium]
+    bus --> worker[Worker Service]
+    worker --> data[(SQL / Cosmos / Blob)]
+    api --> keyvault[Key Vault]
+    worker --> monitor[App Insights / Log Analytics]
+```

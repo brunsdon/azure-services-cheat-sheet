@@ -11,6 +11,8 @@ Start here when browsing the Azure Services Cheat Sheet by topic.
 5. [Identity & Security](identity-security.md)
 6. [DevOps](devops.md)
 7. [Gotchas](gotchas.md)
+8. [Production Readiness Checklist](production-readiness-checklist.md)
+9. [Architecture Recipes](../recipes/README.md)
 
 ## Topic Index
 
@@ -27,4 +29,6 @@ Start here when browsing the Azure Services Cheat Sheet by topic.
 | [DevOps](devops.md) | GitHub Actions, Azure DevOps, Bicep, promotion, secrets. |
 | [Architecture Patterns](architecture-patterns.md) | Queue leveling, outbox, claim check, API gateway, DMZ-safe ingestion. |
 | [Service Selection Guide](service-selection-guide.md) | Decision tables for common Azure choices. |
+| [Production Readiness Checklist](production-readiness-checklist.md) | Go-live checklist for Azure workloads. |
+| [Promotion Notes](promotion-notes.md) | GitHub and LinkedIn presentation guidance. |
 | [Gotchas](gotchas.md) | Production issues and pre-release checks. |
