@@ -2,89 +2,142 @@
 
 ## What It Is
 
-Azure identity and security services control who can access resources, how workloads authenticate, how secrets are stored, and how private enterprise traffic reaches cloud services.
+Azure identity and security services control who can access resources, how
+workloads authenticate, how secrets are stored, and how private enterprise
+traffic reaches cloud services.
 
 | Service | Best fit |
 | --- | --- |
-| Microsoft Entra ID | Users, groups, apps, OAuth 2.0, workload identity. |
+| Microsoft Entra ID | Users, groups, app registrations, OAuth 2.0, workload identity. |
 | Managed Identity | Passwordless auth from Azure workloads to Azure resources. |
-| Key Vault | Secrets, keys, certificates. |
-| RBAC | Resource-level authorization. |
-| Private Endpoints | Private network access to PaaS services. |
-| App Registrations | OAuth clients, API permissions, application identities. |
+| Key Vault | Secrets, certificates, and cryptographic keys. |
+| Azure RBAC | Resource-level authorization. |
+| Private Endpoint | Private network access to Azure PaaS services. |
+| App Configuration | Non-secret configuration and feature flags. |
+
+## Key Vault Vs App Configuration
+
+| Question | Key Vault | App Configuration |
+| --- | --- | --- |
+| Stores secrets | Yes | No |
+| Stores certificates | Yes | No |
+| Stores feature flags | No | Yes |
+| Handles non-secret settings | Possible, but not ideal | Strong fit |
+| Common access pattern | Secure secret retrieval | Centralized config read |
+| Typical pairing | Source for secret references | References Key Vault secrets |
 
 ## When To Use It
 
 - Use Managed Identity for Azure-to-Azure authentication.
 - Use Key Vault for secrets, certificates, signing keys, and rotation workflows.
 - Use Entra app registrations for OAuth clients and APIs.
-- Use RBAC for least-privilege access to Azure resources.
+- Use Azure RBAC for least-privilege access to Azure resources.
 - Use Private Endpoints when traffic must stay on private IP space.
+- Use App Configuration for non-secret environment configuration and feature
+  flags.
 
 ## When Not To Use It
 
 - Do not use client secrets where Managed Identity is available.
-- Do not assign broad roles such as Owner or Contributor to app identities by default.
-- Do not store secrets in appsettings, source control, pipeline variables, or Dataverse plain text.
-- Do not create private endpoints without planning DNS.
+- Do not assign broad roles such as Owner or Contributor to app identities.
+- Do not store secrets in source control, pipeline YAML, appsettings, or plain
+  Dataverse configuration.
+- Do not create private endpoints without DNS ownership.
+- Do not treat API Management JWT validation as a replacement for application
+  authorization.
 
-## Common Patterns
+## OAuth 2.0 And App Registration Notes
 
-- Function App uses Managed Identity to read Key Vault and send to Service Bus.
-- API Management validates JWTs issued by Entra ID.
-- App registration exposes an API scope consumed by partner applications.
-- Private Endpoint secures SQL, Storage, Key Vault, and Service Bus.
-- RBAC groups map to platform, developer, reader, and deployment roles.
+| Scenario | Typical approach |
+| --- | --- |
+| User-facing web app | Authorization code flow with PKCE. |
+| Service-to-service outside Azure | Client credentials with certificate where possible. |
+| Azure-hosted service-to-service | Managed Identity. |
+| API exposed to partners | App registration exposing scopes or app roles. |
+| Background daemon | Client credentials or Managed Identity depending on hosting. |
+
+## Managed Identity Patterns
+
+```mermaid
+flowchart LR
+    function[Azure Function] --> identity[Managed Identity]
+    identity --> keyvault[Key Vault]
+    identity --> servicebus[Service Bus]
+    identity --> storage[Blob Storage]
+```
+
+### Good Uses
+
+- Function reads Key Vault secrets.
+- Worker sends and receives Service Bus messages.
+- App Service reads Blob Storage.
+- Deployment pipeline assigns RBAC to runtime identities.
+
+### Watch For
+
+- System-assigned identities have different object IDs per environment.
+- User-assigned identities are easier to reuse across replacements.
+- RBAC propagation is not instant.
+- Local development needs `DefaultAzureCredential` configuration.
 
 ## Least Privilege Checklist
 
 - Assign roles at the narrowest practical scope.
-- Separate deploy-time permissions from runtime permissions.
+- Separate runtime identities from deployment identities.
 - Use sender-only and receiver-only Service Bus roles where possible.
-- Grant Key Vault Secrets User instead of broad administrator rights.
+- Grant Key Vault Secrets User instead of Key Vault Administrator for apps.
 - Review app registration API permissions and admin consent.
 - Rotate credentials that cannot be replaced with Managed Identity.
 - Alert on privileged role assignment changes.
+- Remove unused app registrations and expired credentials.
 
-## Common Gotchas
+## Private Endpoint Checklist
 
-- Managed Identity object IDs differ between environments.
-- Private Endpoint DNS misconfiguration is a common outage source.
-- Key Vault firewall rules can break CI/CD deployments.
-- App registration secrets expire; certificates also need lifecycle management.
-- RBAC propagation is not instant.
+- Create private DNS zones before cutting over production traffic.
+- Confirm name resolution from build agents, apps, and support machines.
+- Disable public network access only after private connectivity is validated.
+- Document break-glass access for support.
+- Monitor DNS changes and network security rules.
 
-## Security Notes
+## Security Considerations
 
-- Use OAuth 2.0 authorization code flow for user-facing apps.
-- Use client credentials only for service-to-service access when Managed Identity is unavailable.
-- Use certificate credentials over long-lived client secrets for external workloads.
-- Enable diagnostic logs for Key Vault and identity-sensitive resources.
-- Treat connection strings as secrets even when RBAC is enabled.
+- Use OAuth 2.0 and Entra ID for APIs.
+- Validate tokens at API Management and authorize in the application.
+- Use Key Vault references or SDK access instead of copied secrets.
+- Avoid logging tokens, connection strings, message bodies, and document
+  contents.
+- Enable diagnostic logs for Key Vault, API Management, Service Bus, and
+  identity-sensitive resources.
+- Use conditional access and privileged identity management for human access.
 
 ## Cost Considerations
 
-- Entra ID feature cost depends on tenant licensing.
+- Entra ID capability depends on tenant licensing.
 - Key Vault charges for operations and protected key usage.
 - Private Endpoints add hourly and data processing charges.
-- Security logging can materially increase Log Analytics cost.
+- Security and audit logs can materially increase Log Analytics cost.
+- Overuse of separate vaults can increase management overhead.
 
-## Examples
+## Operational Gotchas
 
-```bash
-az keyvault create \
-  --name kv-cheatsheet-dev \
-  --resource-group rg-cheatsheet-dev \
-  --location australiaeast \
-  --enable-rbac-authorization true
-```
+- Key Vault firewall rules often break pipelines and local debugging.
+- Private Endpoint DNS issues can look like application outages.
+- App registration secrets expire silently unless monitored.
+- RBAC changes can take minutes to become effective.
+- Copying secrets into app settings creates rotation debt.
+
+## .NET Key Vault With Managed Identity
 
 ```csharp
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
 var client = new SecretClient(
-    new Uri("https://kv-cheatsheet-dev.vault.azure.net/"),
+    new Uri("https://kv-contoso-prod.vault.azure.net/"),
     new DefaultAzureCredential());
 
-KeyVaultSecret secret = await client.GetSecretAsync("ServiceBusConnection");
+KeyVaultSecret secret = await client.GetSecretAsync("ServiceBus--Namespace");
+Console.WriteLine($"Loaded secret '{secret.Name}'");
 ```
 
 ## Official Docs
