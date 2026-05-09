@@ -3,9 +3,8 @@
 Use this folder for exported diagram assets when a static image is useful.
 
 The source of truth should usually remain in Mermaid markdown under
-[diagrams](../../diagrams/README.md) or the relevant recipe file. Exported
-images can be added here later for social previews, blog posts, or GitHub
-repository images.
+[diagrams](../../diagrams/README.md) or the relevant recipe file. Exported images can be added here
+later for social previews, blog posts, or GitHub repository images.
 
 ## Guidance
 

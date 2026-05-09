@@ -2,34 +2,31 @@
 
 ## What It Is
 
-Reusable Azure patterns for building systems that are resilient, observable,
-secure, and practical to operate.
+Reusable Azure patterns for building systems that are resilient, observable, secure, and practical
+to operate.
 
-These patterns are not academic. They are the shapes that show up in APIs,
-Dataverse integrations, document ingestion, background processing, and
-enterprise application integration.
+These patterns are not academic. They are the shapes that show up in APIs, Dataverse integrations,
+document ingestion, background processing, and enterprise application integration.
 
 ## Pattern Summary
 
-| Pattern | Use when | Core services |
-| --- | --- | --- |
-| Queue-based load leveling | Producers are faster or burstier than consumers | Service Bus, Functions, Container Apps |
-| API gateway | APIs need a managed boundary | API Management, App Service, Functions |
-| Outbox | Database changes and messages must not drift | Azure SQL, Service Bus |
-| Claim check | Payloads are too large or sensitive for messages | Blob Storage, Service Bus |
-| DMZ-safe ingestion | External files must be controlled before internal processing | Blob Storage, Event Grid, Functions |
-| Distributed tracing | Work crosses APIs, queues, and workers | Application Insights, Log Analytics |
-| Event-driven microservices | Services react independently to business events | Service Bus Topics, Event Grid |
+| Pattern                    | Use when                                                     | Core services                          |
+| -------------------------- | ------------------------------------------------------------ | -------------------------------------- |
+| Queue-based load leveling  | Producers are faster or burstier than consumers              | Service Bus, Functions, Container Apps |
+| API gateway                | APIs need a managed boundary                                 | API Management, App Service, Functions |
+| Outbox                     | Database changes and messages must not drift                 | Azure SQL, Service Bus                 |
+| Claim check                | Payloads are too large or sensitive for messages             | Blob Storage, Service Bus              |
+| DMZ-safe ingestion         | External files must be controlled before internal processing | Blob Storage, Event Grid, Functions    |
+| Distributed tracing        | Work crosses APIs, queues, and workers                       | Application Insights, Log Analytics    |
+| Event-driven microservices | Services react independently to business events              | Service Bus Topics, Event Grid         |
 
 ## Production Lessons Learned
 
 - Async architecture without correlation IDs becomes hard to support quickly.
-- Queue boundaries improve resilience only when DLQs, replay, and idempotency
-  are designed.
+- Queue boundaries improve resilience only when DLQs, replay, and idempotency are designed.
 - Private endpoints improve security, but DNS ownership becomes critical.
 - Event-driven systems need schema versioning before the second consumer arrives.
-- Diagrams should include monitoring and support paths, not only happy-path data
-  flow.
+- Diagrams should include monitoring and support paths, not only happy-path data flow.
 
 ## Anti-Patterns To Avoid
 
@@ -42,8 +39,8 @@ enterprise application integration.
 
 ## API Management To Functions To Service Bus
 
-Use this when an external or internal API needs a clean contract but the actual
-work should happen asynchronously.
+Use this when an external or internal API needs a clean contract but the actual work should happen
+asynchronously.
 
 ```mermaid
 flowchart LR
@@ -99,8 +96,7 @@ flowchart LR
 
 ## Event-Driven Microservice Architecture
 
-Use this when multiple services need to react to business events without tight
-coupling.
+Use this when multiple services need to react to business events without tight coupling.
 
 ```mermaid
 flowchart LR
@@ -126,8 +122,7 @@ flowchart LR
 
 ## API Gateway Pattern
 
-Put API Management in front of backend APIs to centralize cross-cutting
-concerns.
+Put API Management in front of backend APIs to centralize cross-cutting concerns.
 
 ### Good Uses
 
@@ -145,8 +140,8 @@ concerns.
 
 ## Retry And Circuit Breaker
 
-Retries handle transient faults. Circuit breakers stop repeated calls to a
-dependency that is already failing.
+Retries handle transient faults. Circuit breakers stop repeated calls to a dependency that is
+already failing.
 
 ### Good Defaults
 
@@ -190,8 +185,7 @@ flowchart LR
 
 ## Claim Check Pattern
 
-Use Blob Storage for large or sensitive payloads and send a reference through
-Service Bus.
+Use Blob Storage for large or sensitive payloads and send a reference through Service Bus.
 
 ```mermaid
 flowchart LR
@@ -217,8 +211,7 @@ flowchart LR
 
 ## DMZ-Safe Document Ingestion
 
-Use a controlled landing zone for externally supplied files before they reach
-internal systems.
+Use a controlled landing zone for externally supplied files before they reach internal systems.
 
 ```mermaid
 flowchart LR
@@ -319,14 +312,14 @@ sequenceDiagram
 
 ## What I Would Choose In 2026
 
-| Problem | Pattern |
-| --- | --- |
-| Slow downstream processing from an API | API Management to Function to Service Bus |
-| Dataverse integration that should not block users | Dataverse to Service Bus Topic |
-| Large document or JSON payloads | Blob claim check |
-| External document upload | DMZ-safe document ingestion |
-| Multi-consumer business events | Service Bus Topic per business event |
-| Consistent database write and publish | Outbox pattern |
+| Problem                                           | Pattern                                   |
+| ------------------------------------------------- | ----------------------------------------- |
+| Slow downstream processing from an API            | API Management to Function to Service Bus |
+| Dataverse integration that should not block users | Dataverse to Service Bus Topic            |
+| Large document or JSON payloads                   | Blob claim check                          |
+| External document upload                          | DMZ-safe document ingestion               |
+| Multi-consumer business events                    | Service Bus Topic per business event      |
+| Consistent database write and publish             | Outbox pattern                            |
 
 ## Official Docs
 

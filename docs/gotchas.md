@@ -2,7 +2,8 @@
 
 ## What It Is
 
-Short notes on Azure issues that often show up during delivery, production support, or architecture reviews.
+Short notes on Azure issues that often show up during delivery, production support, or architecture
+reviews.
 
 ## Identity
 

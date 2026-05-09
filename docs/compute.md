@@ -2,14 +2,15 @@
 
 ## What It Is
 
-Azure compute services run application code: web APIs, scheduled jobs, event handlers, containers, background workers, and full virtual machines.
+Azure compute services run application code: web APIs, scheduled jobs, event handlers, containers,
+background workers, and full virtual machines.
 
-| Service | Best fit |
-| --- | --- |
-| App Service | Hosted web apps, .NET APIs, REST services, background WebJobs. |
-| Azure Functions | Event-driven code, HTTP triggers, queues, timers, lightweight integration logic. |
-| Container Apps | Containerized APIs, workers, event-driven jobs, KEDA-based scaling. |
-| AKS | Kubernetes platforms with strong operations ownership. |
+| Service          | Best fit                                                                           |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| App Service      | Hosted web apps, .NET APIs, REST services, background WebJobs.                     |
+| Azure Functions  | Event-driven code, HTTP triggers, queues, timers, lightweight integration logic.   |
+| Container Apps   | Containerized APIs, workers, event-driven jobs, KEDA-based scaling.                |
+| AKS              | Kubernetes platforms with strong operations ownership.                             |
 | Virtual Machines | Legacy workloads, special OS needs, installed software, migration stepping stones. |
 
 ## When To Use It

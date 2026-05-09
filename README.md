@@ -1,28 +1,28 @@
 # Azure Services Cheat Sheet
 
-[![Azure](https://img.shields.io/badge/Azure-Services-0078D4?logo=microsoftazure&logoColor=white)](https://learn.microsoft.com/azure/)
-[![.NET](https://img.shields.io/badge/.NET-Integration-512BD4?logo=dotnet&logoColor=white)](https://learn.microsoft.com/dotnet/)
-[![DevOps](https://img.shields.io/badge/DevOps-CI%2FCD-0A66C2?logo=azuredevops&logoColor=white)](docs/devops.md)
-[![Architecture](https://img.shields.io/badge/Architecture-Patterns-2E7D32)](docs/architecture-patterns.md)
-[![Markdown Check](https://github.com/brunsdon/azure-services-cheat-sheet/actions/workflows/markdown-check.yml/badge.svg)](https://github.com/brunsdon/azure-services-cheat-sheet/actions/workflows/markdown-check.yml)
-[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Azure][badge-azure]][docs-azure]
+[![.NET][badge-dotnet]][docs-dotnet]
+[![DevOps][badge-devops]][docs-devops]
+[![Architecture][badge-architecture]][docs-architecture]
+[![Markdown Check][badge-markdown-check]][workflow-markdown-check]
+[![Contributions Welcome][badge-contrib]][contributing]
 
-A practical Azure architecture field guide for choosing, using, and
-integrating Azure services in real delivery work.
+A practical Azure architecture field guide for choosing, using, and integrating Azure services in
+real delivery work.
 
-This repository is written for developers, integration specialists, solution
-architects, technical leads, and Dynamics 365 / Power Platform professionals
-who need clear service selection guidance without marketing noise.
+This repository is written for developers, integration specialists, solution architects, technical
+leads, and Dynamics 365 / Power Platform professionals who need clear service selection guidance
+without marketing noise.
 
-Built from real-world delivery experience across Australian Federal Government,
-enterprise integration projects, Dynamics 365 platforms, Dataverse
-integrations, and Azure-native architectures.
+Built from real-world delivery experience across Australian Federal Government, enterprise
+integration projects, Dynamics 365 platforms, Dataverse integrations, and Azure-native
+architectures.
 
 ## Why This Repo Exists
 
-Azure has many overlapping services. The hard part is rarely finding a service
-that can work. The hard part is choosing the service that fits the workload,
-team, cost model, security posture, and operational reality.
+Azure has many overlapping services. The hard part is rarely finding a service that can work. The
+hard part is choosing the service that fits the workload, team, cost model, security posture, and
+operational reality.
 
 This cheat sheet focuses on production-minded decisions:
 
@@ -35,13 +35,13 @@ This cheat sheet focuses on production-minded decisions:
 
 ## Who This Is For
 
-| Audience | What you get |
-| --- | --- |
-| Azure developers | Practical defaults for APIs, Functions, queues, storage, identity, and CI/CD. |
-| Solution architects | Decision tables, trade-offs, diagrams, and architecture patterns. |
-| Technical leads | Delivery checklists, production gotchas, and operational review points. |
+| Audience                                 | What you get                                                                                 |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Azure developers                         | Practical defaults for APIs, Functions, queues, storage, identity, and CI/CD.                |
+| Solution architects                      | Decision tables, trade-offs, diagrams, and architecture patterns.                            |
+| Technical leads                          | Delivery checklists, production gotchas, and operational review points.                      |
 | Dynamics 365 / Power Platform developers | Dataverse integration guidance using Service Bus, Functions, Logic Apps, and API Management. |
-| Recruiters and managers | A quick view of hands-on Azure integration, architecture, and delivery judgement. |
+| Recruiters and managers                  | A quick view of hands-on Azure integration, architecture, and delivery judgement.            |
 
 ## For Recruiters, Managers And Technical Leads
 
@@ -54,68 +54,62 @@ This repo demonstrates:
 - DevOps and production-readiness thinking.
 - Ability to explain complex services clearly.
 
-It positions the author as a senior Azure integration developer, Dynamics 365 /
-Power Platform integration specialist, .NET and Azure architecture practitioner,
-and enterprise delivery-focused engineer.
+It positions the author as a senior Azure integration developer, Dynamics 365 / Power Platform
+integration specialist, .NET and Azure architecture practitioner, and enterprise delivery-focused
+engineer.
 
 ## 🧭 Fast Path: Choosing The Right Azure Service
 
-| Need | Start with | Consider instead when |
+| Need | Start with | Consider when |
 | --- | --- | --- |
-| Run a web API | App Service | Use Functions for event handlers; Container Apps for container-first workloads. |
-| Run event-driven code | Azure Functions | Use App Service or Container Apps for long-running services. |
-| Buffer business work | Service Bus Queue | Use Event Grid for notification; Event Hubs for streaming telemetry. |
-| Publish to multiple business consumers | Service Bus Topic | Use Event Grid when subscribers only need event notification. |
-| Store files or payloads | Blob Storage | Use Data Lake Storage for analytics zones and big-data access. |
-| Store relational data | Azure SQL Database | Use Cosmos DB for partitioned, globally distributed NoSQL workloads. |
-| Store secrets | Key Vault | Use App Configuration for non-secret settings and feature flags. |
-| Build connector-heavy workflow | Logic Apps | Use Durable Functions when orchestration needs code-first control. |
-| Put a boundary in front of APIs | API Management | Use Front Door or Application Gateway for broader ingress/WAF scenarios. |
-| Observe production behavior | Application Insights | Use Log Analytics for cross-resource KQL and diagnostic logs. |
+| Run a web API | App Service | Functions for event handlers; Container Apps for containers. |
+| Run event-driven code | Azure Functions | App Service or Container Apps for long-running services. |
+| Buffer business work | Service Bus Queue | Event Grid for notification; Event Hubs for telemetry. |
+| Publish to consumers | Service Bus Topic | Event Grid when subscribers only need notification. |
+| Store files or payloads | Blob Storage | Data Lake Storage for analytics zones. |
+| Store relational data | Azure SQL Database | Cosmos DB for distributed NoSQL workloads. |
+| Store secrets | Key Vault | App Configuration for non-secret settings. |
+| Build workflow | Logic Apps | Durable Functions for code-first orchestration. |
+| Protect APIs | API Management | Front Door or App Gateway for ingress/WAF. |
+| Observe production | Application Insights | Log Analytics for cross-resource KQL. |
 
 See the full [Service Selection Guide](docs/service-selection-guide.md).
 
 ## Production Readiness
 
-Use the [Production Readiness Checklist](docs/production-readiness-checklist.md)
-before moving an Azure workload into production.
+Use the [Production Readiness Checklist](docs/production-readiness-checklist.md) before moving an
+Azure workload into production.
 
-It covers identity, secrets, networking, messaging, APIs, storage, monitoring,
-CI/CD, resilience, cost control, documentation, and support handover.
+It covers identity, secrets, networking, messaging, APIs, storage, monitoring, CI/CD, resilience,
+cost control, documentation, and support handover.
 
 ## Real-World Azure Integration Focus
 
-This repo is intentionally biased toward the integration patterns that show up
-in enterprise delivery:
+This repo is intentionally biased toward the integration patterns that show up in enterprise
+delivery:
 
-- Azure Service Bus queues, topics, subscriptions, DLQs, sessions, retries, and
-  duplicate detection.
-- Azure Functions for HTTP APIs, timers, Service Bus processors, and Event Grid
-  handlers.
-- API Management for API governance, OAuth/JWT validation, throttling, and
-  partner-facing contracts.
-- Logic Apps for connector-heavy workflow, approvals, and enterprise
-  orchestration.
-- Blob Storage for document ingestion, export, archiving, and claim-check
-  payloads.
+- Azure Service Bus queues, topics, subscriptions, DLQs, sessions, retries, and duplicate detection.
+- Azure Functions for HTTP APIs, timers, Service Bus processors, and Event Grid handlers.
+- API Management for API governance, OAuth/JWT validation, throttling, and partner-facing contracts.
+- Logic Apps for connector-heavy workflow, approvals, and enterprise orchestration.
+- Blob Storage for document ingestion, export, archiving, and claim-check payloads.
 - Key Vault and Managed Identity for secretless Azure-to-Azure authentication.
-- Azure DevOps and GitHub Actions for build, validation, environment promotion,
-  and repeatable Bicep deployments.
-- Dataverse / Dynamics 365 integration using queues, webhooks, plugins,
-  application users, and least-privilege access.
-- Event-driven architecture and DMZ-safe upload patterns for secure enterprise
-  boundaries.
+- Azure DevOps and GitHub Actions for build, validation, environment promotion, and repeatable Bicep
+  deployments.
+- Dataverse / Dynamics 365 integration using queues, webhooks, plugins, application users, and
+  least-privilege access.
+- Event-driven architecture and DMZ-safe upload patterns for secure enterprise boundaries.
 
 ## Common Enterprise Azure Stacks
 
 | Scenario | Typical stack | Why it works |
 | --- | --- | --- |
-| Partner API integration | API Management, App Service or Functions, Service Bus, Key Vault, Application Insights | Separates API contract, processing, secrets, and async reliability. |
-| Dataverse async integration | Dataverse plugin or Power Automate, Service Bus Topic, Azure Function worker, SQL or Blob Storage | Keeps Dataverse transactions short and gives Azure-side retry/monitoring. |
-| Document ingestion | Blob Storage, Event Grid, Azure Function, Service Bus, worker service, Defender or malware scan | Creates a controlled landing zone before internal processing. |
-| Workflow automation | Logic Apps, API Management, Key Vault, Service Bus, Function helpers | Uses connectors for workflow while keeping complex logic in code. |
-| Containerized worker platform | Container Apps, Service Bus scaler, Managed Identity, Key Vault, Log Analytics | Good balance between container packaging and low platform overhead. |
-| Enterprise API platform | Front Door or Application Gateway, API Management, App Service, Private Endpoints, App Insights | Provides ingress, governance, private backends, and telemetry. |
+| Partner API | API Management, Functions, Service Bus, Key Vault | Separates contract, processing, and secrets. |
+| Dataverse async | Dataverse, Service Bus Topic, Function, SQL/Blob | Keeps Dataverse transactions short. |
+| Document ingestion | Blob, Event Grid, Function, Service Bus, worker | Creates a controlled landing zone. |
+| Workflow automation | Logic Apps, API Management, Key Vault, Functions | Connectors plus code where needed. |
+| Container workers | Container Apps, Service Bus scaler, Managed Identity | Container packaging with less platform overhead. |
+| Enterprise API | WAF, API Management, private backend, App Insights | Governance, private access, and telemetry. |
 
 ## Architecture Recipes
 
@@ -136,25 +130,20 @@ This repository demonstrates practical knowledge across:
 - Azure architecture and service selection.
 - .NET APIs, Azure Functions, workers, and integration services.
 - Azure Service Bus, Event Grid, Event Hubs, and event-driven design.
-- API Management, Logic Apps, Blob Storage, Key Vault, Managed Identity, and
-  Azure DevOps.
+- API Management, Logic Apps, Blob Storage, Key Vault, Managed Identity, and Azure DevOps.
 - Dynamics 365 / Dataverse integration and enterprise application integration.
-- Security, cost, scalability, monitoring, deployment, and production support
-  considerations.
+- Security, cost, scalability, monitoring, deployment, and production support considerations.
 
 ## Production Lessons This Repo Emphasizes
 
-- If message ordering matters, unrestricted parallel consumers will eventually
-  create reconciliation issues unless sessions or another ordering strategy are
-  used.
-- If there is no DLQ alert, failed integration work is silently becoming support
-  debt.
-- If correlation IDs stop at the API boundary, production incidents become
-  guesswork.
-- If secrets live in appsettings or pipelines, rotation becomes a release
-  project instead of an operational task.
-- If private endpoints are added without DNS planning, the outage will look like
-  an application problem.
+- If message ordering matters, unrestricted parallel consumers will eventually create reconciliation
+  issues unless sessions or another ordering strategy are used.
+- If there is no DLQ alert, failed integration work is silently becoming support debt.
+- If correlation IDs stop at the API boundary, production incidents become guesswork.
+- If secrets live in appsettings or pipelines, rotation becomes a release project instead of an
+  operational task.
+- If private endpoints are added without DNS planning, the outage will look like an application
+  problem.
 
 ## 🏗️ Featured Architecture Patterns
 
@@ -184,15 +173,15 @@ flowchart LR
 
 | Category | Services | Use when |
 | --- | --- | --- |
-| Compute | App Service, Azure Functions, Container Apps, AKS, VMs | You need to run APIs, jobs, containers, event handlers, or long-running workloads. |
-| Storage | Blob Storage, Data Lake Storage, Files, Queues, Tables | You need files, documents, data lake zones, simple queues, or low-cost object storage. |
-| Integration | Logic Apps, Functions, API Management, Event Grid, Durable Functions | You need workflow, orchestration, API mediation, system integration, or event routing. |
-| Messaging | Service Bus, Event Grid, Event Hubs, Storage Queues | You need async messaging, pub/sub, event notification, telemetry ingestion, or buffering. |
-| Identity & Security | Entra ID, Managed Identity, Key Vault, RBAC, Private Link | You need auth, secret management, least privilege, private access, or workload identity. |
-| Databases | Azure SQL, Cosmos DB, PostgreSQL, Redis, Table Storage | You need relational, globally distributed NoSQL, cache, or simple key-value storage. |
-| Monitoring | Azure Monitor, Application Insights, Log Analytics, Alerts | You need telemetry, traces, logs, dashboards, alerting, and production diagnosis. |
-| DevOps | Azure DevOps, GitHub Actions, Bicep, deployment slots | You need repeatable build, test, deploy, promotion, and infrastructure automation. |
-| Networking | VNets, Private Endpoints, DNS, Load Balancer, Application Gateway, Front Door | You need secure connectivity, ingress, egress control, routing, and private service access. |
+| Compute | App Service, Functions, Container Apps, AKS | APIs, jobs, containers, event handlers. |
+| Storage | Blob, Data Lake, Files, Queues, Tables | Files, documents, object storage, data zones. |
+| Integration | Logic Apps, Functions, API Management | Workflow, orchestration, API mediation. |
+| Messaging | Service Bus, Event Grid, Event Hubs | Async messaging, events, telemetry. |
+| Identity & Security | Entra ID, Managed Identity, Key Vault | Auth, secrets, RBAC, private access. |
+| Databases | Azure SQL, Cosmos DB, PostgreSQL, Redis | Relational, NoSQL, cache, key-value storage. |
+| Monitoring | Azure Monitor, App Insights, Log Analytics | Telemetry, tracing, logs, alerts. |
+| DevOps | Azure DevOps, GitHub Actions, Bicep | Build, test, deploy, promotion. |
+| Networking | VNets, Private Endpoints, DNS, Front Door | Connectivity, ingress, egress, private access. |
 
 ## Learning Roadmap
 
@@ -237,8 +226,7 @@ flowchart LR
 
 ## Contributing
 
-Contributions are welcome when they keep the repo practical, concise, and
-field-tested.
+Contributions are welcome when they keep the repo practical, concise, and field-tested.
 
 Good additions include:
 
@@ -259,10 +247,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Suggested GitHub Topics
 
-`azure`, `azure-functions`, `azure-service-bus`, `azure-architecture`,
-`cloud-architecture`, `dotnet`, `integration-patterns`, `azure-devops`,
-`api-management`, `event-driven-architecture`, `service-bus`, `serverless`,
-`cloud-native`, `microservices`, `power-platform`, `dynamics365`
+`azure`, `azure-functions`, `azure-service-bus`, `azure-architecture`, `cloud-architecture`,
+`dotnet`, `integration-patterns`, `azure-devops`, `api-management`, `event-driven-architecture`,
+`service-bus`, `serverless`, `cloud-native`, `microservices`, `power-platform`, `dynamics365`
 
 ## Author
 
@@ -271,3 +258,16 @@ Maintained by Matthew Brunsdon.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+[badge-azure]: https://img.shields.io/badge/Azure-Services-0078D4?logo=microsoftazure&logoColor=white
+[badge-dotnet]: https://img.shields.io/badge/.NET-Integration-512BD4?logo=dotnet&logoColor=white
+[badge-devops]: https://img.shields.io/badge/DevOps-CI%2FCD-0A66C2?logo=azuredevops&logoColor=white
+[badge-architecture]: https://img.shields.io/badge/Architecture-Patterns-2E7D32
+[badge-markdown-check]: https://github.com/brunsdon/azure-services-cheat-sheet/actions/workflows/markdown-check.yml/badge.svg
+[badge-contrib]: https://img.shields.io/badge/contributions-welcome-brightgreen.svg
+[docs-azure]: https://learn.microsoft.com/azure/
+[docs-dotnet]: https://learn.microsoft.com/dotnet/
+[docs-devops]: docs/devops.md
+[docs-architecture]: docs/architecture-patterns.md
+[workflow-markdown-check]: https://github.com/brunsdon/azure-services-cheat-sheet/actions/workflows/markdown-check.yml
+[contributing]: CONTRIBUTING.md

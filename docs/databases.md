@@ -2,20 +2,22 @@
 
 ## What It Is
 
-Azure database services store operational, analytical, relational, document, cache, and key-value data.
+Azure database services store operational, analytical, relational, document, cache, and key-value
+data.
 
-| Service | Best fit |
-| --- | --- |
-| Azure SQL Database | Relational data, transactions, reporting-friendly schemas. |
-| Cosmos DB | Globally distributed NoSQL, low latency, partitioned workloads. |
-| Azure Database for PostgreSQL | Open-source relational apps and PostgreSQL ecosystem. |
-| Azure Cache for Redis | Low-latency cache, session state, distributed locks. |
-| Table Storage | Simple key-value access with low cost. |
+| Service                       | Best fit                                                        |
+| ----------------------------- | --------------------------------------------------------------- |
+| Azure SQL Database            | Relational data, transactions, reporting-friendly schemas.      |
+| Cosmos DB                     | Globally distributed NoSQL, low latency, partitioned workloads. |
+| Azure Database for PostgreSQL | Open-source relational apps and PostgreSQL ecosystem.           |
+| Azure Cache for Redis         | Low-latency cache, session state, distributed locks.            |
+| Table Storage                 | Simple key-value access with low cost.                          |
 
 ## When To Use It
 
 - Use Azure SQL for relational systems, transactional consistency, joins, and familiar SQL tooling.
-- Use Cosmos DB when partitioning, latency, global distribution, and flexible schema are core requirements.
+- Use Cosmos DB when partitioning, latency, global distribution, and flexible schema are core
+  requirements.
 - Use PostgreSQL when your app expects PostgreSQL features or portability.
 - Use Redis to cache expensive reads or share transient state.
 

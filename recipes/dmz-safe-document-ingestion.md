@@ -2,9 +2,8 @@
 
 ## Problem Statement
 
-External parties need to upload documents, but internal systems should not be
-directly exposed to untrusted files, unknown payloads, or unreliable upload
-clients.
+External parties need to upload documents, but internal systems should not be directly exposed to
+untrusted files, unknown payloads, or unreliable upload clients.
 
 ## When To Use This Pattern
 
@@ -15,16 +14,16 @@ clients.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| API Management or secure portal | Controlled upload entry point. |
-| Blob landing container | Raw external upload zone. |
-| Event Grid | Triggers validation on upload. |
-| Azure Function | Validates, scans, and classifies files. |
-| Clean Blob container | Stores accepted files. |
-| Service Bus Queue | Starts internal processing. |
-| Worker service | Writes to Dataverse, ERP, SQL, or storage. |
-| Application Insights | Audit and operational telemetry. |
+| Service                         | Role                                       |
+| ------------------------------- | ------------------------------------------ |
+| API Management or secure portal | Controlled upload entry point.             |
+| Blob landing container          | Raw external upload zone.                  |
+| Event Grid                      | Triggers validation on upload.             |
+| Azure Function                  | Validates, scans, and classifies files.    |
+| Clean Blob container            | Stores accepted files.                     |
+| Service Bus Queue               | Starts internal processing.                |
+| Worker service                  | Writes to Dataverse, ERP, SQL, or storage. |
+| Application Insights            | Audit and operational telemetry.           |
 
 ## Architecture Diagram
 
@@ -53,11 +52,11 @@ flowchart LR
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
-| Upload directly to internal system | Exposes trusted systems to untrusted input. |
-| Email attachment ingestion | Harder to secure, trace, and replay. |
-| Logic Apps only | Good for workflow, but custom validation can become awkward. |
+| Alternative                        | Why not the default                                          |
+| ---------------------------------- | ------------------------------------------------------------ |
+| Upload directly to internal system | Exposes trusted systems to untrusted input.                  |
+| Email attachment ingestion         | Harder to secure, trace, and replay.                         |
+| Logic Apps only                    | Good for workflow, but custom validation can become awkward. |
 
 ## Security Considerations
 
@@ -77,8 +76,7 @@ flowchart LR
 
 ## Cost Profile
 
-Medium. Storage is low-cost, but scanning, logging, retention, and private
-networking can add cost.
+Medium. Storage is low-cost, but scanning, logging, retention, and private networking can add cost.
 
 ## Operational Gotchas
 

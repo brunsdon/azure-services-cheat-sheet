@@ -2,8 +2,8 @@
 
 Mermaid diagrams used by the Azure Services Cheat Sheet.
 
-The diagrams stay in Markdown so they render directly in GitHub, remain easy to
-review in pull requests, and can evolve with the written guidance.
+The diagrams stay in Markdown so they render directly in GitHub, remain easy to review in pull
+requests, and can evolve with the written guidance.
 
 ## API Management To Functions To Service Bus To SQL
 

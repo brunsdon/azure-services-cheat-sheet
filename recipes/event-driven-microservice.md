@@ -2,8 +2,8 @@
 
 ## Problem Statement
 
-Multiple services need to react to business events without direct calls between
-services or shared runtime availability.
+Multiple services need to react to business events without direct calls between services or shared
+runtime availability.
 
 ## When To Use This Pattern
 
@@ -14,13 +14,13 @@ services or shared runtime availability.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| Service Bus Topic | Durable business event publication. |
-| Topic subscriptions | Per-service delivery state and filters. |
-| Azure Functions or Container Apps | Independent consumers. |
-| Azure SQL or Cosmos DB | Service-owned data store. |
-| Application Insights | Cross-service telemetry. |
+| Service                           | Role                                    |
+| --------------------------------- | --------------------------------------- |
+| Service Bus Topic                 | Durable business event publication.     |
+| Topic subscriptions               | Per-service delivery state and filters. |
+| Azure Functions or Container Apps | Independent consumers.                  |
+| Azure SQL or Cosmos DB            | Service-owned data store.               |
+| Application Insights              | Cross-service telemetry.                |
 
 ## Architecture Diagram
 
@@ -47,11 +47,11 @@ flowchart LR
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
-| Direct service-to-service calls | Creates runtime coupling and cascading failures. |
-| Event Grid | Good for notification, less suited to command-like business processing. |
-| Event Hubs | Better for streams and analytics than per-service business processing. |
+| Alternative                     | Why not the default                                                     |
+| ------------------------------- | ----------------------------------------------------------------------- |
+| Direct service-to-service calls | Creates runtime coupling and cascading failures.                        |
+| Event Grid                      | Good for notification, less suited to command-like business processing. |
+| Event Hubs                      | Better for streams and analytics than per-service business processing.  |
 
 ## Security Considerations
 
@@ -69,8 +69,8 @@ flowchart LR
 
 ## Cost Profile
 
-Medium. Costs grow with number of subscriptions, message volume, retries, and
-logging. Premium Service Bus may be justified for predictable throughput.
+Medium. Costs grow with number of subscriptions, message volume, retries, and logging. Premium
+Service Bus may be justified for predictable throughput.
 
 ## Operational Gotchas
 

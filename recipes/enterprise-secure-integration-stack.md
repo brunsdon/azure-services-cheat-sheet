@@ -2,9 +2,8 @@
 
 ## Problem Statement
 
-An enterprise integration platform needs secure API exposure, private backend
-access, durable messaging, secret management, observability, and controlled
-deployment.
+An enterprise integration platform needs secure API exposure, private backend access, durable
+messaging, secret management, observability, and controlled deployment.
 
 ## When To Use This Pattern
 
@@ -15,17 +14,17 @@ deployment.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| Front Door or Application Gateway | Ingress, WAF, routing. |
-| API Management | API governance and policy. |
-| App Service, Functions, or Container Apps | API and integration compute. |
-| Service Bus Premium | Reliable isolated messaging. |
-| Private Endpoints | Private PaaS access. |
-| Key Vault | Secrets and certificates. |
-| Azure SQL or Cosmos DB | Operational data. |
-| Application Insights and Log Analytics | Observability and diagnostics. |
-| Azure DevOps or GitHub Actions | Controlled deployment. |
+| Service                                   | Role                           |
+| ----------------------------------------- | ------------------------------ |
+| Front Door or Application Gateway         | Ingress, WAF, routing.         |
+| API Management                            | API governance and policy.     |
+| App Service, Functions, or Container Apps | API and integration compute.   |
+| Service Bus Premium                       | Reliable isolated messaging.   |
+| Private Endpoints                         | Private PaaS access.           |
+| Key Vault                                 | Secrets and certificates.      |
+| Azure SQL or Cosmos DB                    | Operational data.              |
+| Application Insights and Log Analytics    | Observability and diagnostics. |
+| Azure DevOps or GitHub Actions            | Controlled deployment.         |
 
 ## Architecture Diagram
 
@@ -53,12 +52,12 @@ flowchart LR
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
-| Direct public App Service | Weak API governance and exposure boundary. |
-| Service Bus Standard | Often fine, but less isolation for critical workloads. |
-| AKS | Powerful but adds platform operational burden. |
-| Logic Apps only | Good for workflows, not a full integration platform by itself. |
+| Alternative               | Why not the default                                            |
+| ------------------------- | -------------------------------------------------------------- |
+| Direct public App Service | Weak API governance and exposure boundary.                     |
+| Service Bus Standard      | Often fine, but less isolation for critical workloads.         |
+| AKS                       | Powerful but adds platform operational burden.                 |
+| Logic Apps only           | Good for workflows, not a full integration platform by itself. |
 
 ## Security Considerations
 
@@ -77,9 +76,9 @@ flowchart LR
 
 ## Cost Profile
 
-High compared with startup patterns. API Management, WAF, private networking,
-Service Bus Premium, and Log Analytics all add baseline cost. The trade-off is
-governance, isolation, security, and operational confidence.
+High compared with startup patterns. API Management, WAF, private networking, Service Bus Premium,
+and Log Analytics all add baseline cost. The trade-off is governance, isolation, security, and
+operational confidence.
 
 ## Operational Gotchas
 

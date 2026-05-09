@@ -2,15 +2,16 @@
 
 ## What It Is
 
-Azure Storage provides durable cloud storage for files, documents, blobs, queues, tables, and analytics workloads.
+Azure Storage provides durable cloud storage for files, documents, blobs, queues, tables, and
+analytics workloads.
 
-| Service | Best fit |
-| --- | --- |
-| Blob Storage | Documents, images, exports, payloads, backups, claim-check bodies. |
+| Service           | Best fit                                                                 |
+| ----------------- | ------------------------------------------------------------------------ |
+| Blob Storage      | Documents, images, exports, payloads, backups, claim-check bodies.       |
 | Data Lake Storage | Analytics zones, hierarchical namespace, Spark/Synapse/Fabric workloads. |
-| Azure Files | SMB/NFS file shares and lift-and-shift file dependencies. |
-| Queue Storage | Simple queueing when Service Bus features are not needed. |
-| Table Storage | Simple key-value storage with low operational overhead. |
+| Azure Files       | SMB/NFS file shares and lift-and-shift file dependencies.                |
+| Queue Storage     | Simple queueing when Service Bus features are not needed.                |
+| Table Storage     | Simple key-value storage with low operational overhead.                  |
 
 ## When To Use It
 

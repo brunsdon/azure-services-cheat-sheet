@@ -2,8 +2,8 @@
 
 ## Problem Statement
 
-A small product or internal tool needs to start on Azure without enterprise
-cost, while still leaving a path to secure and scalable architecture later.
+A small product or internal tool needs to start on Azure without enterprise cost, while still
+leaving a path to secure and scalable architecture later.
 
 ## When To Use This Pattern
 
@@ -14,15 +14,15 @@ cost, while still leaving a path to secure and scalable architecture later.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| App Service Basic or Standard | Hosts the web API or app. |
-| Azure Functions Consumption | Runs scheduled or event-driven tasks. |
-| Azure SQL Basic/Serverless or PostgreSQL | Stores relational business data. |
-| Blob Storage | Stores files and exports. |
-| Key Vault | Stores secrets. |
-| Application Insights | Basic telemetry and failure diagnosis. |
-| GitHub Actions | CI/CD. |
+| Service                                  | Role                                   |
+| ---------------------------------------- | -------------------------------------- |
+| App Service Basic or Standard            | Hosts the web API or app.              |
+| Azure Functions Consumption              | Runs scheduled or event-driven tasks.  |
+| Azure SQL Basic/Serverless or PostgreSQL | Stores relational business data.       |
+| Blob Storage                             | Stores files and exports.              |
+| Key Vault                                | Stores secrets.                        |
+| Application Insights                     | Basic telemetry and failure diagnosis. |
+| GitHub Actions                           | CI/CD.                                 |
 
 ## Architecture Diagram
 
@@ -48,12 +48,12 @@ flowchart LR
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
-| AKS | Too much platform overhead for a small workload. |
-| Cosmos DB | Can be excellent, but partitioning and RU cost need care. |
+| Alternative    | Why not the default                                         |
+| -------------- | ----------------------------------------------------------- |
+| AKS            | Too much platform overhead for a small workload.            |
+| Cosmos DB      | Can be excellent, but partitioning and RU cost need care.   |
 | API Management | Valuable later, but may be unnecessary baseline cost early. |
-| Container Apps | Useful if containers are already part of the workflow. |
+| Container Apps | Useful if containers are already part of the workflow.      |
 
 ## Security Considerations
 
@@ -72,8 +72,8 @@ flowchart LR
 
 ## Cost Profile
 
-Low. The main traps are oversized App Service plans, verbose Log Analytics
-ingestion, always-on databases, and unused test environments.
+Low. The main traps are oversized App Service plans, verbose Log Analytics ingestion, always-on
+databases, and unused test environments.
 
 ## Operational Gotchas
 

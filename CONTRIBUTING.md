@@ -2,9 +2,8 @@
 
 Thanks for helping improve the Azure Services Cheat Sheet.
 
-This repository is intended to be practical, readable, and useful in real
-architecture and delivery conversations. Contributions should make Azure
-service choices easier, not just add more content.
+This repository is intended to be practical, readable, and useful in real architecture and delivery
+conversations. Contributions should make Azure service choices easier, not just add more content.
 
 ## Contribution Principles
 
@@ -22,8 +21,7 @@ service choices easier, not just add more content.
 - Real-world gotchas.
 - Service comparison tables.
 - Production checklists.
-- Small Azure CLI, Bicep, PowerShell, .NET, GitHub Actions, or Azure DevOps
-  snippets.
+- Small Azure CLI, Bicep, PowerShell, .NET, GitHub Actions, or Azure DevOps snippets.
 - Architecture patterns with clear trade-offs.
 - Dataverse / Dynamics 365 integration lessons.
 - Corrections when Azure product behavior or names change.
@@ -59,10 +57,9 @@ When adding architecture content, try to answer:
 - Mermaid diagrams are valid.
 - Code blocks have language identifiers.
 - Examples avoid real secrets, tenant IDs, or customer names.
-- New guidance is useful for developers, architects, technical leads, or
-  integration specialists.
-- Any official documentation links point to Microsoft Learn or relevant
-  Microsoft-owned documentation.
+- New guidance is useful for developers, architects, technical leads, or integration specialists.
+- Any official documentation links point to Microsoft Learn or relevant Microsoft-owned
+  documentation.
 
 ## Tone
 

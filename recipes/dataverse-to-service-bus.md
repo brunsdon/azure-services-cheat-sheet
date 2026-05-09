@@ -2,9 +2,8 @@
 
 ## Problem Statement
 
-Dataverse or Dynamics 365 needs to notify Azure services about business changes
-without making the Dataverse transaction slow, fragile, or dependent on external
-systems.
+Dataverse or Dynamics 365 needs to notify Azure services about business changes without making the
+Dataverse transaction slow, fragile, or dependent on external systems.
 
 ## When To Use This Pattern
 
@@ -15,14 +14,14 @@ systems.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| Dataverse plugin or Power Automate | Publishes change event. |
-| Service Bus Topic | Durable business event fan-out. |
-| Topic subscriptions | Independent consumer delivery state. |
-| Azure Function | Subscriber worker and transformation logic. |
-| Blob Storage or Azure SQL | Payload, audit, or integration state. |
-| Application Insights | Correlated telemetry and support trail. |
+| Service                            | Role                                        |
+| ---------------------------------- | ------------------------------------------- |
+| Dataverse plugin or Power Automate | Publishes change event.                     |
+| Service Bus Topic                  | Durable business event fan-out.             |
+| Topic subscriptions                | Independent consumer delivery state.        |
+| Azure Function                     | Subscriber worker and transformation logic. |
+| Blob Storage or Azure SQL          | Payload, audit, or integration state.       |
+| Application Insights               | Correlated telemetry and support trail.     |
 
 ## Architecture Diagram
 
@@ -44,17 +43,16 @@ flowchart LR
 - Dataverse stays focused on the business transaction.
 - Service Bus gives durable delivery, DLQ, and subscriber isolation.
 - Azure Functions keep transformation and integration logic testable.
-- Subscriptions allow audit, sync, and integration consumers to evolve
-  independently.
+- Subscriptions allow audit, sync, and integration consumers to evolve independently.
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
-| Synchronous plugin calling API | Makes Dataverse depend on external latency and availability. |
-| Direct Power Automate to target API | Can be fine, but harder to replay and govern at scale. |
-| Event Grid | Useful for notification, weaker for durable business commands. |
-| Data export only | Good for analytics, not command-style integration. |
+| Alternative                         | Why not the default                                            |
+| ----------------------------------- | -------------------------------------------------------------- |
+| Synchronous plugin calling API      | Makes Dataverse depend on external latency and availability.   |
+| Direct Power Automate to target API | Can be fine, but harder to replay and govern at scale.         |
+| Event Grid                          | Useful for notification, weaker for durable business commands. |
+| Data export only                    | Good for analytics, not command-style integration.             |
 
 ## Security Considerations
 
@@ -73,8 +71,8 @@ flowchart LR
 
 ## Cost Profile
 
-Low to medium. Service Bus and Functions are usually efficient. Costs increase
-with high message volume, verbose logging, and multiple subscriptions.
+Low to medium. Service Bus and Functions are usually efficient. Costs increase with high message
+volume, verbose logging, and multiple subscriptions.
 
 ## Operational Gotchas
 

@@ -2,40 +2,37 @@
 
 ## What It Is
 
-Azure messaging services move work between systems without tight runtime
-coupling. They are the backbone of reliable integration, event-driven design,
-and workload smoothing.
+Azure messaging services move work between systems without tight runtime coupling. They are the
+backbone of reliable integration, event-driven design, and workload smoothing.
 
-| Service | Best fit |
-| --- | --- |
-| Service Bus Queue | Durable commands, background work, retries, dead-letter handling. |
-| Service Bus Topic | Durable business pub/sub with subscriptions and filters. |
-| Event Grid | Lightweight event notification and reactive routing. |
-| Event Hubs | High-volume telemetry, logs, clickstreams, and streaming ingestion. |
-| Storage Queue | Simple queueing with a smaller feature set. |
+| Service           | Best fit                                                            |
+| ----------------- | ------------------------------------------------------------------- |
+| Service Bus Queue | Durable commands, background work, retries, dead-letter handling.   |
+| Service Bus Topic | Durable business pub/sub with subscriptions and filters.            |
+| Event Grid        | Lightweight event notification and reactive routing.                |
+| Event Hubs        | High-volume telemetry, logs, clickstreams, and streaming ingestion. |
+| Storage Queue     | Simple queueing with a smaller feature set.                         |
 
 ## Service Bus Vs Event Grid Vs Event Hubs
 
-| Question | Service Bus | Event Grid | Event Hubs |
-| --- | --- | --- | --- |
-| Primary use | Business messaging | Event notification | Streaming ingestion |
-| Delivery model | Pull or processor-based | Push delivery | Partitioned stream |
-| Message durability | Strong | Retried event delivery | Retention window |
-| Ordering | Sessions | Not guaranteed | Per partition |
-| Dead-letter support | Yes | Dead-letter endpoint possible | Consumer-managed |
-| Typical payload | Command or business event | Small event envelope | Telemetry event |
-| Use for Dataverse integration | Yes, especially async processing | Sometimes, for notifications | Rarely |
-| Use for IoT or telemetry | Sometimes | No | Yes |
+| Question                      | Service Bus                      | Event Grid                    | Event Hubs          |
+| ----------------------------- | -------------------------------- | ----------------------------- | ------------------- |
+| Primary use                   | Business messaging               | Event notification            | Streaming ingestion |
+| Delivery model                | Pull or processor-based          | Push delivery                 | Partitioned stream  |
+| Message durability            | Strong                           | Retried event delivery        | Retention window    |
+| Ordering                      | Sessions                         | Not guaranteed                | Per partition       |
+| Dead-letter support           | Yes                              | Dead-letter endpoint possible | Consumer-managed    |
+| Typical payload               | Command or business event        | Small event envelope          | Telemetry event     |
+| Use for Dataverse integration | Yes, especially async processing | Sometimes, for notifications  | Rarely              |
+| Use for IoT or telemetry      | Sometimes                        | No                            | Yes                 |
 
 ## When To Use Service Bus
 
 - You need reliable business message processing.
 - Producers and consumers should not depend on each other being online.
-- Messages may need retries, dead-letter queues, duplicate detection, or
-  sessions.
+- Messages may need retries, dead-letter queues, duplicate detection, or sessions.
 - Multiple consumers need independent subscriptions to the same business event.
-- You are decoupling Dataverse, Dynamics 365, APIs, workers, or third-party
-  systems.
+- You are decoupling Dataverse, Dynamics 365, APIs, workers, or third-party systems.
 
 ## When Not To Use Service Bus
 
@@ -48,27 +45,26 @@ and workload smoothing.
 ## What Breaks First In Production
 
 - DLQs grow quietly because nobody owns the alert or replay process.
-- Consumers process messages in parallel and accidentally break ordering
-  assumptions.
+- Consumers process messages in parallel and accidentally break ordering assumptions.
 - Lock duration is shorter than real processing time, causing duplicate work.
 - Retry policies hammer a throttled downstream API instead of backing off.
 - Message schemas change without versioning and older consumers fail.
 
-If message ordering matters, avoid unrestricted parallel consumers unless using
-sessions or a separate ordering strategy. Teams often discover this only after
-reconciliation or downstream processing issues appear in production.
+If message ordering matters, avoid unrestricted parallel consumers unless using sessions or a
+separate ordering strategy. Teams often discover this only after reconciliation or downstream
+processing issues appear in production.
 
 ## Core Concepts
 
-| Concept | Practical meaning |
-| --- | --- |
-| Queue | One logical backlog processed by one or more competing consumers. |
-| Topic | One published message copied to matching subscriptions. |
-| Subscription | A durable subscriber with independent delivery state. |
-| Dead-letter queue | Holding area for poison, expired, or explicitly rejected messages. |
-| Lock | A temporary processing lease that must complete or renew before expiry. |
+| Concept             | Practical meaning                                                          |
+| ------------------- | -------------------------------------------------------------------------- |
+| Queue               | One logical backlog processed by one or more competing consumers.          |
+| Topic               | One published message copied to matching subscriptions.                    |
+| Subscription        | A durable subscriber with independent delivery state.                      |
+| Dead-letter queue   | Holding area for poison, expired, or explicitly rejected messages.         |
+| Lock                | A temporary processing lease that must complete or renew before expiry.    |
 | Duplicate detection | Suppresses messages with the same `MessageId` in a configured time window. |
-| Session | Groups related messages for ordered, single-consumer processing. |
+| Session             | Groups related messages for ordered, single-consumer processing.           |
 
 ## Common Patterns
 
@@ -115,15 +111,13 @@ flowchart LR
 - Increase consumer concurrency only after handlers are idempotent.
 - Use sessions only when ordering is required; they reduce parallelism.
 - Use Premium when predictable throughput and resource isolation matter.
-- Keep message handlers short and move slow downstream calls behind their own
-  queues when needed.
-- Watch queue length, active messages, scheduled messages, lock lost count, and
-  age of oldest message.
+- Keep message handlers short and move slow downstream calls behind their own queues when needed.
+- Watch queue length, active messages, scheduled messages, lock lost count, and age of oldest
+  message.
 
 ## Common Scaling Traps
 
-- Increasing `MaxConcurrentCalls` before the database or downstream API can
-  handle the load.
+- Increasing `MaxConcurrentCalls` before the database or downstream API can handle the load.
 - Using sessions for every message and then wondering why throughput is low.
 - Treating Service Bus as a streaming platform instead of using Event Hubs.
 - Publishing large payloads instead of using Blob Storage claim check.
@@ -135,18 +129,16 @@ flowchart LR
 - Use separate roles for senders and receivers.
 - Scope access at the queue or topic level where practical.
 - Use private endpoints for internal enterprise messaging.
-- Do not log full message bodies if they can contain personal, financial, or
-  commercially sensitive data.
+- Do not log full message bodies if they can contain personal, financial, or commercially sensitive
+  data.
 
 ## Cost Considerations
 
 - Standard is cost-effective for many business workloads.
-- Premium has a fixed baseline cost but better isolation and predictable
-  throughput.
+- Premium has a fixed baseline cost but better isolation and predictable throughput.
 - High retry rates can increase operations and hide downstream failures.
 - DLQ buildup is both an operational risk and a storage cost smell.
-- Event Hubs pricing is usually better for high-volume telemetry than Service
-  Bus.
+- Event Hubs pricing is usually better for high-volume telemetry than Service Bus.
 
 ## Common Cost Traps
 
@@ -175,14 +167,14 @@ flowchart LR
 
 ## What I Would Choose In 2026
 
-| Scenario | Choice |
-| --- | --- |
-| Business-critical async command | Service Bus Queue |
-| Durable business pub/sub | Service Bus Topic |
-| Lightweight resource notification | Event Grid |
-| High-volume telemetry stream | Event Hubs |
-| Large payload workflow | Blob Storage plus Service Bus claim check |
-| Ordered per-entity processing | Service Bus sessions with clear concurrency limits |
+| Scenario                          | Choice                                             |
+| --------------------------------- | -------------------------------------------------- |
+| Business-critical async command   | Service Bus Queue                                  |
+| Durable business pub/sub          | Service Bus Topic                                  |
+| Lightweight resource notification | Event Grid                                         |
+| High-volume telemetry stream      | Event Hubs                                         |
+| Large payload workflow            | Blob Storage plus Service Bus claim check          |
+| Ordered per-entity processing     | Service Bus sessions with clear concurrency limits |
 
 ## Production Checklist
 
@@ -276,6 +268,6 @@ await processor.StartProcessingAsync();
 ## Official Docs
 
 - [Azure Service Bus documentation](https://learn.microsoft.com/azure/service-bus-messaging/)
-- [Service Bus queues, topics, and subscriptions](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-queues-topics-subscriptions)
+- [Queues, topics, and subscriptions](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-queues-topics-subscriptions)
 - [Event Grid documentation](https://learn.microsoft.com/azure/event-grid/)
 - [Event Hubs documentation](https://learn.microsoft.com/azure/event-hubs/)

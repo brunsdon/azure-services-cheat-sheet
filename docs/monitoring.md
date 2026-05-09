@@ -2,41 +2,35 @@
 
 ## What It Is
 
-Azure monitoring services collect metrics, logs, traces, dependencies,
-exceptions, availability results, and alerts across applications and
-infrastructure.
+Azure monitoring services collect metrics, logs, traces, dependencies, exceptions, availability
+results, and alerts across applications and infrastructure.
 
-Good monitoring is not "lots of logs." It is the ability to answer what failed,
-who was affected, whether the system is recovering, and what support action is
-needed.
+Good monitoring is not "lots of logs." It is the ability to answer what failed, who was affected,
+whether the system is recovering, and what support action is needed.
 
-| Service | Best fit |
-| --- | --- |
-| Application Insights | Application telemetry, distributed tracing, dependencies, exceptions. |
-| Log Analytics | Central KQL query store for logs and diagnostics. |
-| Azure Monitor Metrics | Platform and resource metrics. |
-| Alerts | Actionable notifications and automation. |
-| Workbooks / Dashboards | Operational views for support and engineering teams. |
+| Service                | Best fit                                                              |
+| ---------------------- | --------------------------------------------------------------------- |
+| Application Insights   | Application telemetry, distributed tracing, dependencies, exceptions. |
+| Log Analytics          | Central KQL query store for logs and diagnostics.                     |
+| Azure Monitor Metrics  | Platform and resource metrics.                                        |
+| Alerts                 | Actionable notifications and automation.                              |
+| Workbooks / Dashboards | Operational views for support and engineering teams.                  |
 
 ## When To Use It
 
-- Use Application Insights for APIs, Functions, workers, and distributed
-  tracing.
+- Use Application Insights for APIs, Functions, workers, and distributed tracing.
 - Use Log Analytics for cross-resource query and diagnostics.
 - Use alerts for symptoms users care about, not every noisy metric.
-- Use correlation IDs across APIs, queues, workers, databases, and external
-  calls.
+- Use correlation IDs across APIs, queues, workers, databases, and external calls.
 - Use runbooks when an alert requires a repeatable support action.
 
 ## When Not To Use It
 
-- Do not log secrets, tokens, full message bodies, or personal data without a
-  clear policy.
+- Do not log secrets, tokens, full message bodies, or personal data without a clear policy.
 - Do not keep verbose logs forever.
 - Do not rely only on infrastructure metrics for application health.
 - Do not create alerts that no one owns.
-- Do not sample away the only traces needed for critical workflows without
-  understanding the impact.
+- Do not sample away the only traces needed for critical workflows without understanding the impact.
 
 ## What Breaks First In Production
 
@@ -118,13 +112,13 @@ Useful dashboards show:
 
 Prefer alerts that map to action:
 
-| Alert | Action |
-| --- | --- |
-| DLQ count greater than zero | Triage poison messages and replay if safe. |
+| Alert                              | Action                                              |
+| ---------------------------------- | --------------------------------------------------- |
+| DLQ count greater than zero        | Triage poison messages and replay if safe.          |
 | Oldest message age above threshold | Scale workers or investigate downstream dependency. |
-| API 5xx spike | Check backend health and recent deployments. |
-| Dependency failure spike | Check target system, throttling, or credentials. |
-| Key Vault access failures | Check RBAC, firewall, identity, or secret expiry. |
+| API 5xx spike                      | Check backend health and recent deployments.        |
+| Dependency failure spike           | Check target system, throttling, or credentials.    |
+| Key Vault access failures          | Check RBAC, firewall, identity, or secret expiry.   |
 
 ## Audit Logging
 

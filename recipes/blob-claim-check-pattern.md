@@ -2,9 +2,8 @@
 
 ## Problem Statement
 
-A workflow needs to move large documents or payloads between systems, but the
-message broker should carry metadata and routing information rather than the
-entire payload.
+A workflow needs to move large documents or payloads between systems, but the message broker should
+carry metadata and routing information rather than the entire payload.
 
 ## When To Use This Pattern
 
@@ -15,13 +14,13 @@ entire payload.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| Blob Storage | Stores the large payload. |
-| Service Bus | Carries metadata and blob reference. |
+| Service                  | Role                                      |
+| ------------------------ | ----------------------------------------- |
+| Blob Storage             | Stores the large payload.                 |
+| Service Bus              | Carries metadata and blob reference.      |
 | Azure Function or worker | Reads the blob and processes the payload. |
-| Key Vault | Stores external credentials if needed. |
-| Application Insights | Traces processing and failures. |
+| Key Vault                | Stores external credentials if needed.    |
+| Application Insights     | Traces processing and failures.           |
 
 ## Architecture Diagram
 
@@ -43,11 +42,11 @@ flowchart LR
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
+| Alternative            | Why not the default                                   |
+| ---------------------- | ----------------------------------------------------- |
 | Put payload in message | Hits size limits and increases logging/security risk. |
-| Store payload in SQL | Expensive and awkward for large binary objects. |
-| Use Event Grid only | Does not provide command queue semantics. |
+| Store payload in SQL   | Expensive and awkward for large binary objects.       |
+| Use Event Grid only    | Does not provide command queue semantics.             |
 
 ## Security Considerations
 
@@ -65,8 +64,8 @@ flowchart LR
 
 ## Cost Profile
 
-Low to medium. Blob Storage is cost-effective, but costs increase with retention,
-versioning, frequent reads, and high transaction volume.
+Low to medium. Blob Storage is cost-effective, but costs increase with retention, versioning,
+frequent reads, and high transaction volume.
 
 ## Operational Gotchas
 

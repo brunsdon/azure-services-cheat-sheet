@@ -1,7 +1,7 @@
 # Azure CLI Snippets
 
-Production examples should be parameterized in scripts or pipelines. These
-snippets are intentionally small so the command shape is easy to reuse.
+Production examples should be parameterized in scripts or pipelines. These snippets are
+intentionally small so the command shape is easy to reuse.
 
 ## Login And Subscription
 

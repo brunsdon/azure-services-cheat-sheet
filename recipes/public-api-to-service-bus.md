@@ -2,9 +2,8 @@
 
 ## Problem Statement
 
-An external or internal consumer needs to submit work through an API, but the
-backend processing is slow, failure-prone, or dependent on downstream systems
-with rate limits.
+An external or internal consumer needs to submit work through an API, but the backend processing is
+slow, failure-prone, or dependent on downstream systems with rate limits.
 
 ## When To Use This Pattern
 
@@ -15,15 +14,15 @@ with rate limits.
 
 ## Recommended Azure Services
 
-| Service | Role |
-| --- | --- |
-| API Management | Public API boundary, JWT validation, throttling, versioning. |
-| Azure Function or App Service | Request validation and message publishing. |
-| Service Bus Queue | Durable async work buffer. |
-| Worker Function or Container App | Background processing. |
-| Azure SQL | Operational business data. |
-| Application Insights | Request, dependency, trace, and failure telemetry. |
-| Key Vault | Secrets, certificates, external API credentials. |
+| Service                          | Role                                                         |
+| -------------------------------- | ------------------------------------------------------------ |
+| API Management                   | Public API boundary, JWT validation, throttling, versioning. |
+| Azure Function or App Service    | Request validation and message publishing.                   |
+| Service Bus Queue                | Durable async work buffer.                                   |
+| Worker Function or Container App | Background processing.                                       |
+| Azure SQL                        | Operational business data.                                   |
+| Application Insights             | Request, dependency, trace, and failure telemetry.           |
+| Key Vault                        | Secrets, certificates, external API credentials.             |
 
 ## Architecture Diagram
 
@@ -48,12 +47,12 @@ flowchart LR
 
 ## Alternatives Considered
 
-| Alternative | Why not the default |
-| --- | --- |
-| Direct API to SQL | Couples client latency to database and downstream work. |
-| Event Grid | Better for notifications than business commands. |
-| Event Hubs | Better for telemetry streams than command processing. |
-| Logic Apps | Good for workflow, but less ideal for code-heavy validation. |
+| Alternative       | Why not the default                                          |
+| ----------------- | ------------------------------------------------------------ |
+| Direct API to SQL | Couples client latency to database and downstream work.      |
+| Event Grid        | Better for notifications than business commands.             |
+| Event Hubs        | Better for telemetry streams than command processing.        |
+| Logic Apps        | Good for workflow, but less ideal for code-heavy validation. |
 
 ## Security Considerations
 
@@ -72,9 +71,8 @@ flowchart LR
 
 ## Cost Profile
 
-Medium. API Management adds baseline cost. Functions and Service Bus are usually
-cost-effective at moderate volume. Logging can become a cost trap if request
-bodies or verbose traces are captured.
+Medium. API Management adds baseline cost. Functions and Service Bus are usually cost-effective at
+moderate volume. Logging can become a cost trap if request bodies or verbose traces are captured.
 
 ## Operational Gotchas
 

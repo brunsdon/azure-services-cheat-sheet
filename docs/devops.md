@@ -2,11 +2,11 @@
 
 ## What It Is
 
-Azure DevOps and GitHub Actions automate build, test, security validation,
-infrastructure deployment, application release, and environment promotion.
+Azure DevOps and GitHub Actions automate build, test, security validation, infrastructure
+deployment, application release, and environment promotion.
 
-For Azure architecture work, DevOps is not just "deployment." It is how teams
-make environments repeatable, control risk, and keep production recoverable.
+For Azure architecture work, DevOps is not just "deployment." It is how teams make environments
+repeatable, control risk, and keep production recoverable.
 
 ## When To Use It
 
@@ -27,23 +27,23 @@ make environments repeatable, control risk, and keep production recoverable.
 
 ## GitHub Actions Vs Azure DevOps
 
-| Factor | GitHub Actions | Azure DevOps Pipelines |
-| --- | --- | --- |
-| Best fit | GitHub-native repos and open-source style workflows | Enterprise Azure DevOps delivery |
-| YAML experience | Strong | Strong |
-| Environment approvals | Supported | Supported |
-| Work item integration | GitHub Issues / Projects | Azure Boards |
-| Azure integration | Strong with `azure/login` | Strong with service connections |
-| Common choice | Modern GitHub repos | Existing Azure DevOps estates |
+| Factor                | GitHub Actions                                      | Azure DevOps Pipelines           |
+| --------------------- | --------------------------------------------------- | -------------------------------- |
+| Best fit              | GitHub-native repos and open-source style workflows | Enterprise Azure DevOps delivery |
+| YAML experience       | Strong                                              | Strong                           |
+| Environment approvals | Supported                                           | Supported                        |
+| Work item integration | GitHub Issues / Projects                            | Azure Boards                     |
+| Azure integration     | Strong with `azure/login`                           | Strong with service connections  |
+| Common choice         | Modern GitHub repos                                 | Existing Azure DevOps estates    |
 
 ## Environment Promotion
 
-| Stage | Purpose | Typical checks |
-| --- | --- | --- |
-| Dev | Fast engineering feedback | Build, unit tests, lint, Bicep validation. |
-| Test | Integration confidence | Integration tests, seeded config, smoke tests. |
-| UAT | Business validation | Approval, release notes, migration dry run. |
-| Prod | Live service | Approval, rollback plan, monitoring, smoke test. |
+| Stage | Purpose                   | Typical checks                                   |
+| ----- | ------------------------- | ------------------------------------------------ |
+| Dev   | Fast engineering feedback | Build, unit tests, lint, Bicep validation.       |
+| Test  | Integration confidence    | Integration tests, seeded config, smoke tests.   |
+| UAT   | Business validation       | Approval, release notes, migration dry run.      |
+| Prod  | Live service              | Approval, rollback plan, monitoring, smoke test. |
 
 ## Bicep Deployment Flow
 
