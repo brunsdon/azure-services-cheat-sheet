@@ -2,11 +2,13 @@
 
 ## What It Is
 
-Azure monitoring services collect metrics, logs, traces, dependencies, exceptions, availability
-results, and alerts across applications and infrastructure.
+Azure monitoring services collect metrics, logs, traces, dependencies,
+exceptions, availability results, and alerts across applications and
+infrastructure.
 
-Good monitoring is not "lots of logs." It is the ability to answer what failed, who was affected,
-whether the system is recovering, and what support action is needed.
+Good monitoring is not "lots of logs." It is the ability to answer what failed,
+who was affected, whether the system is recovering, and what support action is
+needed.
 
 | Service                | Best fit                                                              |
 | ---------------------- | --------------------------------------------------------------------- |
@@ -18,19 +20,23 @@ whether the system is recovering, and what support action is needed.
 
 ## When To Use It
 
-- Use Application Insights for APIs, Functions, workers, and distributed tracing.
+- Use Application Insights for APIs, Functions, workers, and distributed
+  tracing.
 - Use Log Analytics for cross-resource query and diagnostics.
 - Use alerts for symptoms users care about, not every noisy metric.
-- Use correlation IDs across APIs, queues, workers, databases, and external calls.
+- Use correlation IDs across APIs, queues, workers, databases, and external
+  calls.
 - Use runbooks when an alert requires a repeatable support action.
 
 ## When Not To Use It
 
-- Do not log secrets, tokens, full message bodies, or personal data without a clear policy.
+- Do not log secrets, tokens, full message bodies, or personal data without a
+  clear policy.
 - Do not keep verbose logs forever.
 - Do not rely only on infrastructure metrics for application health.
 - Do not create alerts that no one owns.
-- Do not sample away the only traces needed for critical workflows without understanding the impact.
+- Do not sample away the only traces needed for critical workflows without
+  understanding the impact.
 
 ## What Breaks First In Production
 
@@ -158,6 +164,9 @@ Avoid storing sensitive payloads as audit data unless policy requires it.
 - [ ] Dashboards show failure paths.
 - [ ] Log retention and sampling are intentional.
 - [ ] Audit logging covers replay and support actions.
+- [ ] Every alert has an owner and a first response action.
+- [ ] Replay actions write an audit event.
+- [ ] Poison message examples have been tested outside production.
 
 ## Useful KQL
 

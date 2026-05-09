@@ -2,8 +2,8 @@
 
 ## What It Is
 
-Short notes on Azure issues that often show up during delivery, production support, or architecture
-reviews.
+Short notes on Azure issues that often show up during delivery, production
+support, or architecture reviews.
 
 ## Identity
 
@@ -14,7 +14,8 @@ reviews.
 
 ## Messaging
 
-- Service Bus messages can be delivered more than once; handlers must be idempotent.
+- Service Bus messages can be delivered more than once; handlers must be
+  idempotent.
 - Lock duration must match processing time or be renewed.
 - DLQs do not fix themselves; monitor and triage them.
 - Sessions are useful for ordering but reduce concurrency.
@@ -32,7 +33,8 @@ reviews.
 - Public blob access should be disabled by default.
 - Archive tier requires rehydration before reads.
 - Soft delete and versioning increase retained storage.
-- Blob trigger timing may not be suitable for every workflow; Event Grid is often cleaner.
+- Blob trigger timing may not be suitable for every workflow; Event Grid is
+  often cleaner.
 
 ## Networking
 
@@ -44,7 +46,8 @@ reviews.
 ## Databases
 
 - Cosmos DB partition keys are foundational design decisions.
-- SQL performance issues often come from missing indexes, chatty access, or under-sized compute.
+- SQL performance issues often come from missing indexes, chatty access, or
+  under-sized compute.
 - Redis eviction can remove data if memory policy is not understood.
 
 ## DevOps

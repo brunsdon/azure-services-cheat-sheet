@@ -2,8 +2,9 @@
 
 ## Problem Statement
 
-Dataverse or Dynamics 365 needs to notify Azure services about business changes without making the
-Dataverse transaction slow, fragile, or dependent on external systems.
+Dataverse or Dynamics 365 needs to notify Azure services about business changes
+without making the Dataverse transaction slow, fragile, or dependent on external
+systems.
 
 ## When To Use This Pattern
 
@@ -11,6 +12,13 @@ Dataverse transaction slow, fragile, or dependent on external systems.
 - External systems are slower or less reliable than Dataverse.
 - Multiple downstream consumers need the same business event.
 - You need retry, DLQ, and replay outside the Dataverse transaction.
+
+## Avoid When
+
+- The change must be completed synchronously inside Dataverse.
+- The message contract is not owned by a team.
+- Downstream consumers cannot handle duplicate delivery.
+- Bulk operations are common but throttling has not been tested.
 
 ## Recommended Azure Services
 
@@ -43,7 +51,8 @@ flowchart LR
 - Dataverse stays focused on the business transaction.
 - Service Bus gives durable delivery, DLQ, and subscriber isolation.
 - Azure Functions keep transformation and integration logic testable.
-- Subscriptions allow audit, sync, and integration consumers to evolve independently.
+- Subscriptions allow audit, sync, and integration consumers to evolve
+  independently.
 
 ## Alternatives Considered
 
@@ -71,8 +80,8 @@ flowchart LR
 
 ## Cost Profile
 
-Low to medium. Service Bus and Functions are usually efficient. Costs increase with high message
-volume, verbose logging, and multiple subscriptions.
+Low to medium. Service Bus and Functions are usually efficient. Costs increase
+with high message volume, verbose logging, and multiple subscriptions.
 
 ## Operational Gotchas
 
@@ -80,6 +89,10 @@ volume, verbose logging, and multiple subscriptions.
 - Service protection limits can appear during bulk operations.
 - Message ordering is not guaranteed unless sessions are deliberately used.
 - Replay can duplicate downstream writes unless consumers are idempotent.
+- The first thing that usually breaks is a plug-in doing too much work in the
+  Dataverse transaction.
+- In production, watch bulk imports and integrations that generate many related
+  events at once.
 
 ## Production Readiness Checklist
 

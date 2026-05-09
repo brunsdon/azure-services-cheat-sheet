@@ -1,6 +1,7 @@
 # Production Readiness Checklist
 
-Use this checklist before promoting an Azure integration or application workload to production.
+Use this checklist before promoting an Azure integration or application workload
+to production.
 
 ## Identity And Access
 
@@ -16,8 +17,8 @@ Use this checklist before promoting an Azure integration or application workload
 - [ ] Secrets are stored in Key Vault.
 - [ ] No secrets are stored in source control.
 - [ ] No secrets are stored in appsettings unless using secure references.
-- [ ] Pipeline variables are not used for long-lived production secrets unless secured and
-      unavoidable.
+- [ ] Pipeline variables are not used for long-lived production secrets unless
+      secured and unavoidable.
 - [ ] Key Vault access has been reviewed.
 - [ ] App Configuration is used for non-secret shared settings where useful.
 - [ ] Secret rotation process is documented.
@@ -27,8 +28,8 @@ Use this checklist before promoting an Azure integration or application workload
 - [ ] Public endpoints are intentional and documented.
 - [ ] Private Endpoints are used where required.
 - [ ] Private DNS resolution is tested from apps, agents, and support paths.
-- [ ] Ingress uses API Management, Front Door, or Application Gateway when governance or WAF is
-      required.
+- [ ] Ingress uses API Management, Front Door, or Application Gateway when
+      governance or WAF is required.
 - [ ] Egress IPs are known where partners require allowlists.
 - [ ] Firewall and IP restrictions do not block deployments or health probes.
 
@@ -41,6 +42,8 @@ Use this checklist before promoting an Azure integration or application workload
 - [ ] Message ordering requirements are documented.
 - [ ] Duplicate detection or idempotency keys are used where needed.
 - [ ] Replay process is tested.
+- [ ] Poison message handling has been tested.
+- [ ] Ordering requirements are documented before concurrency is raised.
 
 ## APIs
 
@@ -69,6 +72,8 @@ Use this checklist before promoting an Azure integration or application workload
 - [ ] Dependency failure alerts are configured.
 - [ ] Dashboards or workbooks exist for support teams.
 - [ ] Runbooks exist for common failures.
+- [ ] Every alert has an owner.
+- [ ] Replay, manual fix, and support actions are audit logged.
 
 ## CI/CD
 

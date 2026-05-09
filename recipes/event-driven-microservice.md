@@ -2,8 +2,8 @@
 
 ## Problem Statement
 
-Multiple services need to react to business events without direct calls between services or shared
-runtime availability.
+Multiple services need to react to business events without direct calls between
+services or shared runtime availability.
 
 ## When To Use This Pattern
 
@@ -11,6 +11,13 @@ runtime availability.
 - Each consumer needs its own retry and failure handling.
 - Business events are useful to more than one downstream process.
 - Temporary consumer outages should not block the publisher.
+
+## Avoid When
+
+- There is only one consumer and a queue would be simpler.
+- Consumers need strict global ordering.
+- The event schema is unstable or undefined.
+- Teams are not ready to own subscriptions and DLQs.
 
 ## Recommended Azure Services
 
@@ -69,8 +76,8 @@ flowchart LR
 
 ## Cost Profile
 
-Medium. Costs grow with number of subscriptions, message volume, retries, and logging. Premium
-Service Bus may be justified for predictable throughput.
+Medium. Costs grow with number of subscriptions, message volume, retries, and
+logging. Premium Service Bus may be justified for predictable throughput.
 
 ## Operational Gotchas
 
@@ -78,6 +85,10 @@ Service Bus may be justified for predictable throughput.
 - Consumers must handle duplicate delivery.
 - Adding a subscription creates a new operational owner.
 - Overly broad event payloads leak data and create coupling.
+- This becomes painful when every service publishes slightly different versions
+  of the same business fact.
+- In production, watch subscriptions that nobody monitors because the publisher
+  team assumes consumers own them.
 
 ## Production Readiness Checklist
 

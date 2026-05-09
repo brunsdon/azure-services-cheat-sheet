@@ -2,8 +2,9 @@
 
 ## What It Is
 
-Azure messaging services move work between systems without tight runtime coupling. They are the
-backbone of reliable integration, event-driven design, and workload smoothing.
+Azure messaging services move work between systems without tight runtime
+coupling. They are the backbone of reliable integration, event-driven design,
+and workload smoothing.
 
 | Service           | Best fit                                                            |
 | ----------------- | ------------------------------------------------------------------- |
@@ -15,24 +16,26 @@ backbone of reliable integration, event-driven design, and workload smoothing.
 
 ## Service Bus Vs Event Grid Vs Event Hubs
 
-| Question                      | Service Bus                      | Event Grid                    | Event Hubs          |
-| ----------------------------- | -------------------------------- | ----------------------------- | ------------------- |
-| Primary use                   | Business messaging               | Event notification            | Streaming ingestion |
-| Delivery model                | Pull or processor-based          | Push delivery                 | Partitioned stream  |
-| Message durability            | Strong                           | Retried event delivery        | Retention window    |
-| Ordering                      | Sessions                         | Not guaranteed                | Per partition       |
-| Dead-letter support           | Yes                              | Dead-letter endpoint possible | Consumer-managed    |
-| Typical payload               | Command or business event        | Small event envelope          | Telemetry event     |
-| Use for Dataverse integration | Yes, especially async processing | Sometimes, for notifications  | Rarely              |
-| Use for IoT or telemetry      | Sometimes                        | No                            | Yes                 |
+| Question | Service Bus | Event Grid | Event Hubs |
+| --- | --- | --- | --- |
+| Primary use | Business messaging | Event notification | Streaming ingestion |
+| Delivery model | Pull/process | Push delivery | Partitioned stream |
+| Durability | Strong | Retried delivery | Retention window |
+| Ordering | Sessions | Not guaranteed | Per partition |
+| Dead-lettering | Built in | Endpoint option | Consumer-managed |
+| Typical payload | Command/event | Small envelope | Telemetry event |
+| Dataverse fit | Strong | Sometimes | Rare |
+| Telemetry fit | Sometimes | No | Strong |
 
 ## When To Use Service Bus
 
 - You need reliable business message processing.
 - Producers and consumers should not depend on each other being online.
-- Messages may need retries, dead-letter queues, duplicate detection, or sessions.
+- Messages may need retries, dead-letter queues, duplicate detection, or
+  sessions.
 - Multiple consumers need independent subscriptions to the same business event.
-- You are decoupling Dataverse, Dynamics 365, APIs, workers, or third-party systems.
+- You are decoupling Dataverse, Dynamics 365, APIs, workers, or third-party
+  systems.
 
 ## When Not To Use Service Bus
 
@@ -45,14 +48,15 @@ backbone of reliable integration, event-driven design, and workload smoothing.
 ## What Breaks First In Production
 
 - DLQs grow quietly because nobody owns the alert or replay process.
-- Consumers process messages in parallel and accidentally break ordering assumptions.
+- Consumers process messages in parallel and accidentally break ordering
+  assumptions.
 - Lock duration is shorter than real processing time, causing duplicate work.
 - Retry policies hammer a throttled downstream API instead of backing off.
 - Message schemas change without versioning and older consumers fail.
 
-If message ordering matters, avoid unrestricted parallel consumers unless using sessions or a
-separate ordering strategy. Teams often discover this only after reconciliation or downstream
-processing issues appear in production.
+If message ordering matters, avoid unrestricted parallel consumers unless using
+sessions or a separate ordering strategy. Teams often discover this only after
+reconciliation or downstream processing issues appear in production.
 
 ## Core Concepts
 
@@ -111,13 +115,15 @@ flowchart LR
 - Increase consumer concurrency only after handlers are idempotent.
 - Use sessions only when ordering is required; they reduce parallelism.
 - Use Premium when predictable throughput and resource isolation matter.
-- Keep message handlers short and move slow downstream calls behind their own queues when needed.
-- Watch queue length, active messages, scheduled messages, lock lost count, and age of oldest
-  message.
+- Keep message handlers short and move slow downstream calls behind their own
+  queues when needed.
+- Watch queue length, active messages, scheduled messages, lock lost count, and
+  age of oldest message.
 
 ## Common Scaling Traps
 
-- Increasing `MaxConcurrentCalls` before the database or downstream API can handle the load.
+- Increasing `MaxConcurrentCalls` before the database or downstream API can
+  handle the load.
 - Using sessions for every message and then wondering why throughput is low.
 - Treating Service Bus as a streaming platform instead of using Event Hubs.
 - Publishing large payloads instead of using Blob Storage claim check.
@@ -129,16 +135,18 @@ flowchart LR
 - Use separate roles for senders and receivers.
 - Scope access at the queue or topic level where practical.
 - Use private endpoints for internal enterprise messaging.
-- Do not log full message bodies if they can contain personal, financial, or commercially sensitive
-  data.
+- Do not log full message bodies if they can contain personal, financial, or
+  commercially sensitive data.
 
 ## Cost Considerations
 
 - Standard is cost-effective for many business workloads.
-- Premium has a fixed baseline cost but better isolation and predictable throughput.
+- Premium has a fixed baseline cost but better isolation and predictable
+  throughput.
 - High retry rates can increase operations and hide downstream failures.
 - DLQ buildup is both an operational risk and a storage cost smell.
-- Event Hubs pricing is usually better for high-volume telemetry than Service Bus.
+- Event Hubs pricing is usually better for high-volume telemetry than Service
+  Bus.
 
 ## Common Cost Traps
 
@@ -183,6 +191,8 @@ flowchart LR
 - Use structured logging with `MessageId`, `CorrelationId`, and business keys.
 - Include retry classification for transient, validation, and poison failures.
 - Document replay steps and permissions before production.
+- Test duplicate delivery before production.
+- Decide whether ordering matters before increasing consumer concurrency.
 
 ## .NET Sender
 
@@ -268,6 +278,8 @@ await processor.StartProcessingAsync();
 ## Official Docs
 
 - [Azure Service Bus documentation](https://learn.microsoft.com/azure/service-bus-messaging/)
-- [Queues, topics, and subscriptions](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-queues-topics-subscriptions)
+- [Queues, topics, subscriptions][service-bus-queues]
 - [Event Grid documentation](https://learn.microsoft.com/azure/event-grid/)
 - [Event Hubs documentation](https://learn.microsoft.com/azure/event-hubs/)
+
+[service-bus-queues]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-queues-topics-subscriptions

@@ -2,8 +2,8 @@
 
 ## What It Is
 
-Decision tables for common Azure architecture choices. Use this page when the question is "which
-service should I use?"
+Decision tables for common Azure architecture choices. Use this page when the
+question is "which service should I use?"
 
 ## Quick Decision Rules
 
@@ -14,6 +14,12 @@ service should I use?"
 - Use Blob Storage for files and large payloads.
 - Use Key Vault for secrets and App Configuration for non-secret settings.
 - Use Managed Identity whenever the workload runs in Azure.
+
+If the design crosses a system boundary, ask three questions early:
+
+- How does it retry?
+- How does it replay?
+- How will support find one failed business transaction?
 
 ## What I Would Usually Choose
 
@@ -34,14 +40,18 @@ service should I use?"
 
 ## Decision Scars
 
-- Do not choose Cosmos DB just because it is cloud-native. Partitioning and RU cost need to be
-  understood first.
-- Do not choose Functions for long-running stateful workflows unless Durable Functions is the
-  intended model.
+- Do not choose Cosmos DB just because it is cloud-native. Partitioning and RU
+  cost need to be understood first.
+- Do not choose Functions for long-running stateful workflows unless Durable
+  Functions is the intended model.
 - Do not choose Service Bus for high-volume telemetry streams. Use Event Hubs.
 - Do not choose Event Grid when guaranteed ordered processing is required.
 - Do not choose Logic Apps when complex custom code and testability are central.
 - Do not choose AKS unless the team is ready to operate Kubernetes.
+- Avoid synchronous chains across more than one unreliable dependency unless the
+  caller truly needs the final result immediately.
+- Teams often underestimate how quickly "just call the API" becomes painful when
+  replay and audit are needed.
 
 ## I Need To Run Code
 
@@ -55,15 +65,15 @@ service should I use?"
 
 ## Functions Vs App Service Vs Container Apps
 
-| Factor               | Azure Functions                | App Service                  | Container Apps                         |
-| -------------------- | ------------------------------ | ---------------------------- | -------------------------------------- |
-| Best default         | Event-driven handlers          | Web APIs and web apps        | Containerized services and workers     |
-| Scaling              | Trigger and plan based         | App Service plan based       | KEDA and revision based                |
-| Cold starts          | Possible on Consumption        | No typical cold start        | Possible with scale-to-zero            |
-| Long-running work    | Better on Premium              | Good                         | Good                                   |
-| Local dev            | Good                           | Excellent                    | Good                                   |
-| Operational overhead | Low                            | Low                          | Medium                                 |
-| Avoid when           | App is a large domain monolith | Work is mostly trigger-based | Team does not want container ownership |
+| Factor | Functions | App Service | Container Apps |
+| --- | --- | --- | --- |
+| Best default | Event handlers | Web APIs | Containers |
+| Scaling | Trigger/plan based | Plan based | KEDA/revisions |
+| Cold starts | Possible | Usually no | Possible |
+| Long-running work | Premium plan | Good | Good |
+| Local dev | Good | Excellent | Good |
+| Overhead | Low | Low | Medium |
+| Avoid when | Large monolith | Mostly triggers | No container ownership |
 
 ## I Need Async Messaging
 

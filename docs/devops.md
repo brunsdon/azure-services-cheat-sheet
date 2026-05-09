@@ -2,11 +2,11 @@
 
 ## What It Is
 
-Azure DevOps and GitHub Actions automate build, test, security validation, infrastructure
-deployment, application release, and environment promotion.
+Azure DevOps and GitHub Actions automate build, test, security validation,
+infrastructure deployment, application release, and environment promotion.
 
-For Azure architecture work, DevOps is not just "deployment." It is how teams make environments
-repeatable, control risk, and keep production recoverable.
+For Azure architecture work, DevOps is not just "deployment." It is how teams
+make environments repeatable, control risk, and keep production recoverable.
 
 ## When To Use It
 

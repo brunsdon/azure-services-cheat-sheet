@@ -2,8 +2,8 @@
 
 ## What It Is
 
-Azure compute services run application code: web APIs, scheduled jobs, event handlers, containers,
-background workers, and full virtual machines.
+Azure compute services run application code: web APIs, scheduled jobs, event
+handlers, containers, background workers, and full virtual machines.
 
 | Service          | Best fit                                                                           |
 | ---------------- | ---------------------------------------------------------------------------------- |
@@ -15,17 +15,22 @@ background workers, and full virtual machines.
 
 ## When To Use It
 
-- Use App Service for stable HTTP APIs and web apps that need predictable hosting.
-- Use Functions for small event handlers, queue processors, timers, and serverless integration.
-- Use Container Apps when packaging, sidecars, scale-to-zero, or container parity matters.
-- Use AKS when you need Kubernetes APIs, custom networking, service mesh, or platform-level control.
+- Use App Service for stable HTTP APIs and web apps that need predictable
+  hosting.
+- Use Functions for small event handlers, queue processors, timers, and
+  serverless integration.
+- Use Container Apps when packaging, sidecars, scale-to-zero, or container
+  parity matters.
+- Use AKS when you need Kubernetes APIs, custom networking, service mesh, or
+  platform-level control.
 
 ## When Not To Use It
 
 - Do not use Functions as a dumping ground for large domain applications.
 - Do not use AKS just because the app is containerized.
 - Avoid VMs for new cloud-native apps unless there is a hard dependency.
-- Avoid Consumption Functions for workloads needing stable warm latency or long execution windows.
+- Avoid Consumption Functions for workloads needing stable warm latency or long
+  execution windows.
 
 ## Common Patterns
 
@@ -40,14 +45,16 @@ background workers, and full virtual machines.
 - Cold starts can matter for latency-sensitive Functions.
 - Function timeout limits depend on hosting plan.
 - App Service plan sizing affects every app in the plan.
-- Container Apps revisions can surprise teams if traffic weights are not understood.
+- Container Apps revisions can surprise teams if traffic weights are not
+  understood.
 - AKS shifts a lot of operational responsibility to your team.
 
 ## Security Notes
 
 - Prefer Managed Identity over connection strings.
 - Use Private Endpoints for sensitive backends.
-- Put public APIs behind API Management, Front Door, or Application Gateway where appropriate.
+- Put public APIs behind API Management, Front Door, or Application Gateway
+  where appropriate.
 - Disable FTP/basic publishing unless required.
 - Store secrets in Key Vault, not application settings.
 

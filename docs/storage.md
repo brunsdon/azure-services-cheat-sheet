@@ -2,8 +2,8 @@
 
 ## What It Is
 
-Azure Storage provides durable cloud storage for files, documents, blobs, queues, tables, and
-analytics workloads.
+Azure Storage provides durable cloud storage for files, documents, blobs,
+queues, tables, and analytics workloads.
 
 | Service           | Best fit                                                                 |
 | ----------------- | ------------------------------------------------------------------------ |
@@ -18,19 +18,22 @@ analytics workloads.
 - Store large payloads outside messages using Blob Storage.
 - Use Data Lake Storage for analytics-oriented storage zones.
 - Use lifecycle management for archive/cool tier transitions.
-- Use private containers by default and grant access through managed identity or short-lived SAS.
+- Use private containers by default and grant access through managed identity or
+  short-lived SAS.
 
 ## When Not To Use It
 
 - Do not put sensitive files in public containers.
 - Do not use Blob Storage as a relational database.
-- Do not use Storage Queues when you need sessions, duplicate detection, transactions, or topics.
+- Do not use Storage Queues when you need sessions, duplicate detection,
+  transactions, or topics.
 - Do not use SAS tokens as long-lived shared credentials.
 
 ## Common Patterns
 
 - Claim check: send metadata on Service Bus, store large body in Blob Storage.
-- Document ingestion: upload blob, trigger Function, validate, then publish message.
+- Document ingestion: upload blob, trigger Function, validate, then publish
+  message.
 - Export/archive: write daily files to blob and move to cool/archive tier.
 - Landing/raw/curated zones in Data Lake.
 
@@ -89,5 +92,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
 ## Official Docs
 
 - [Azure Blob Storage documentation](https://learn.microsoft.com/azure/storage/blobs/)
-- [Azure Data Lake Storage documentation](https://learn.microsoft.com/azure/storage/blobs/data-lake-storage-introduction)
+- [Azure Data Lake Storage][data-lake-docs]
 - [Azure Files documentation](https://learn.microsoft.com/azure/storage/files/)
+
+[data-lake-docs]: https://learn.microsoft.com/azure/storage/blobs/data-lake-storage-introduction

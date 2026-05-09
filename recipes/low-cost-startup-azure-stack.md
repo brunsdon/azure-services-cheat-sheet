@@ -2,8 +2,8 @@
 
 ## Problem Statement
 
-A small product or internal tool needs to start on Azure without enterprise cost, while still
-leaving a path to secure and scalable architecture later.
+A small product or internal tool needs to start on Azure without enterprise
+cost, while still leaving a path to secure and scalable architecture later.
 
 ## When To Use This Pattern
 
@@ -11,6 +11,13 @@ leaving a path to secure and scalable architecture later.
 - Traffic is modest or unpredictable.
 - The team wants low operations overhead.
 - The architecture should not block later growth.
+
+## Avoid When
+
+- You already need strict network isolation or WAF controls.
+- The workload has high, predictable throughput.
+- Multiple teams need governed API access.
+- The app handles sensitive data without a clear security review.
 
 ## Recommended Azure Services
 
@@ -72,8 +79,8 @@ flowchart LR
 
 ## Cost Profile
 
-Low. The main traps are oversized App Service plans, verbose Log Analytics ingestion, always-on
-databases, and unused test environments.
+Low. The main traps are oversized App Service plans, verbose Log Analytics
+ingestion, always-on databases, and unused test environments.
 
 ## Operational Gotchas
 
@@ -81,6 +88,9 @@ databases, and unused test environments.
 - App settings can become secret sprawl without Key Vault.
 - Serverless cold starts may matter for user-facing paths.
 - Backups and restore testing still matter for small systems.
+- This works well until the first external integration needs replay, audit, or
+  stable API governance.
+- Add Service Bus early if background work starts leaking into request paths.
 
 ## Production Readiness Checklist
 

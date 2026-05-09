@@ -2,9 +2,10 @@
 
 ## What It Is
 
-Azure integration services connect applications, APIs, workflows, events, messages, files, and
-enterprise systems. In real projects this usually means a mix of API Management, Azure Functions,
-Logic Apps, Service Bus, Event Grid, Blob Storage, Key Vault, and monitoring.
+Azure integration services connect applications, APIs, workflows, events,
+messages, files, and enterprise systems. In real projects this usually means a
+mix of API Management, Azure Functions, Logic Apps, Service Bus, Event Grid,
+Blob Storage, Key Vault, and monitoring.
 
 | Service             | Best fit                                                            |
 | ------------------- | ------------------------------------------------------------------- |
@@ -43,26 +44,29 @@ Logic Apps, Service Bus, Event Grid, Blob Storage, Key Vault, and monitoring.
 
 - Use API Management when APIs need a managed boundary.
 - Use Functions when the integration needs custom code and testability.
-- Use Logic Apps when connectors, workflow history, and orchestration speed matter.
+- Use Logic Apps when connectors, workflow history, and orchestration speed
+  matter.
 - Use Durable Functions when orchestration logic belongs in code.
 - Use Event Grid when a resource event should trigger downstream work.
 - Use Service Bus when work must be processed reliably and asynchronously.
 
 ## When Not To Use Them
 
-- Do not put complex domain logic into Logic Apps just because a connector is available.
-- Do not expose raw Function URLs to external consumers when policies, throttling, versioning, and
-  auth normalization are needed.
+- Do not put complex domain logic into Logic Apps just because a connector is
+  available.
+- Do not expose raw Function URLs to external consumers when policies,
+  throttling, versioning, and auth normalization are needed.
 - Do not use Event Grid as a business command queue.
 - Do not use Durable Functions for simple queue consumers.
-- Do not build point-to-point integrations without ownership, retries, monitoring, and replay
-  thinking.
+- Do not build point-to-point integrations without ownership, retries,
+  monitoring, and replay thinking.
 
 ## What Breaks First In Production
 
 - Point-to-point integrations fail without a replay path.
 - API Management policies mask backend errors because diagnostics are thin.
-- Logic Apps become hard to review when business logic grows inside workflow definitions.
+- Logic Apps become hard to review when business logic grows inside workflow
+  definitions.
 - Dataverse plug-ins call slow external APIs and degrade user transactions.
 - Correlation IDs are lost between API, workflow, queue, and worker.
 
@@ -81,8 +85,9 @@ flowchart LR
 
 ## Dataverse / Dynamics 365 Integration
 
-Dataverse integrations should protect transaction performance and respect service protection limits.
-Push slow or unreliable downstream work out of the Dataverse request path.
+Dataverse integrations should protect transaction performance and respect
+service protection limits. Push slow or unreliable downstream work out of the
+Dataverse request path.
 
 ```mermaid
 flowchart LR
@@ -106,13 +111,13 @@ flowchart LR
 
 ## Hybrid Integration Patterns
 
-| Pattern                                  | Use when                                      | Watch for                           |
-| ---------------------------------------- | --------------------------------------------- | ----------------------------------- |
-| API Management to private backend        | Internal APIs need controlled external access | DNS, certificates, private routing  |
-| Logic Apps with on-premises data gateway | Workflow needs legacy/on-premises connectors  | Gateway ownership and throughput    |
-| Service Bus relay or queue handoff       | Internal system should pull work securely     | Message schema and replay process   |
-| Self-hosted deployment agent             | CI/CD must deploy into a private network      | Agent patching and credential scope |
-| Blob landing zone                        | External party uploads documents              | Malware scan, validation, lifecycle |
+| Pattern | Use when | Watch for |
+| --- | --- | --- |
+| API Management to private backend | APIs need controlled access. | DNS and routing. |
+| Logic Apps with data gateway | Workflow needs legacy connectors. | Gateway ownership. |
+| Service Bus handoff | Internal systems should pull work. | Schema and replay. |
+| Self-hosted deployment agent | CI/CD needs private access. | Agent patching. |
+| Blob landing zone | External parties upload files. | Validation and lifecycle. |
 
 ## Security Considerations
 
@@ -134,8 +139,10 @@ flowchart LR
 ## Common Scaling Traps
 
 - Scaling Functions without checking downstream API limits.
-- Using Logic Apps for high-volume transformation-heavy workloads that belong in code.
-- Letting Power Automate or Logic Apps trigger one flow run per record in a bulk import.
+- Using Logic Apps for high-volume transformation-heavy workloads that belong in
+  code.
+- Letting Power Automate or Logic Apps trigger one flow run per record in a bulk
+  import.
 - Using synchronous HTTP chains where a queue boundary would absorb spikes.
 
 ## Cost Considerations
@@ -148,7 +155,8 @@ flowchart LR
 
 ## Common Cost Traps
 
-- API Management tier chosen for production but left running for unused test environments.
+- API Management tier chosen for production but left running for unused test
+  environments.
 - Logic App action count grows because loops process records one by one.
 - Verbose workflow run history captures large payloads.
 - Private endpoints and DNS zones are created broadly without ownership.
@@ -156,7 +164,8 @@ flowchart LR
 ## Operational Gotchas
 
 - API Management policies can hide backend failure details without diagnostics.
-- Logic App run history may contain sensitive data unless inputs/outputs are secured.
+- Logic App run history may contain sensitive data unless inputs/outputs are
+  secured.
 - Durable Function orchestrators must be deterministic.
 - Event Grid retries do not make it a command queue.
 - Lack of correlation IDs makes cross-service incidents painful.
@@ -188,6 +197,8 @@ flowchart LR
 - Capture correlation IDs from API to message to worker.
 - Monitor API failures, queue age, DLQs, dependency failures, and retry rates.
 - Document replay and support procedures.
+- Keep custom business logic in code when testing and version control matter.
+- Keep workflow tools for orchestration, routing, and connector-heavy work.
 
 ## Official Docs
 

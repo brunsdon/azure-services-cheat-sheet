@@ -2,8 +2,8 @@
 
 ## What It Is
 
-Azure networking connects users, services, and private systems through virtual networks, DNS,
-ingress, egress, load balancing, and private connectivity.
+Azure networking connects users, services, and private systems through virtual
+networks, DNS, ingress, egress, load balancing, and private connectivity.
 
 ## When To Use It
 
@@ -26,8 +26,8 @@ ingress, egress, load balancing, and private connectivity.
 - Hub-spoke network for shared firewall, DNS, and connectivity.
 - Private Endpoint for SQL, Storage, Key Vault, and Service Bus.
 - API Management internal mode with Application Gateway or Front Door.
-- NAT Gateway for stable egress from Functions Premium, App Service VNet integration, or Container
-  Apps.
+- NAT Gateway for stable egress from Functions Premium, App Service VNet
+  integration, or Container Apps.
 
 ## Common Gotchas
 
@@ -46,8 +46,8 @@ ingress, egress, load balancing, and private connectivity.
 
 ## Cost Considerations
 
-- Private Endpoints, NAT Gateway, Application Gateway, Front Door, Firewall, and ExpressRoute all
-  add network cost.
+- Private Endpoints, NAT Gateway, Application Gateway, Front Door, Firewall, and
+  ExpressRoute all add network cost.
 - Cross-region and internet egress can be expensive.
 - Diagnostic logs for network devices can be high volume.
 

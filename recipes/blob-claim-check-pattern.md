@@ -2,8 +2,9 @@
 
 ## Problem Statement
 
-A workflow needs to move large documents or payloads between systems, but the message broker should
-carry metadata and routing information rather than the entire payload.
+A workflow needs to move large documents or payloads between systems, but the
+message broker should carry metadata and routing information rather than the
+entire payload.
 
 ## When To Use This Pattern
 
@@ -11,6 +12,13 @@ carry metadata and routing information rather than the entire payload.
 - Different consumers need controlled access to the payload.
 - Payload retention differs from message retention.
 - Message size limits or logging risk make inline payloads unsuitable.
+
+## Avoid When
+
+- The payload is tiny and not sensitive.
+- Consumers cannot access Blob Storage reliably.
+- Retention and cleanup ownership is unclear.
+- A missing blob would be harder to support than a failed message.
 
 ## Recommended Azure Services
 
@@ -64,8 +72,8 @@ flowchart LR
 
 ## Cost Profile
 
-Low to medium. Blob Storage is cost-effective, but costs increase with retention, versioning,
-frequent reads, and high transaction volume.
+Low to medium. Blob Storage is cost-effective, but costs increase with
+retention, versioning, frequent reads, and high transaction volume.
 
 ## Operational Gotchas
 
@@ -73,6 +81,10 @@ frequent reads, and high transaction volume.
 - Blob lifecycle cleanup must not delete payloads before replay windows expire.
 - SAS token expiry can break delayed processing.
 - Versioning and soft delete may increase retained storage.
+- This is simple to start but becomes painful without lifecycle rules and
+  replay-aware retention.
+- Avoid putting long-lived SAS URLs into messages unless there is no better
+  option.
 
 ## Production Readiness Checklist
 

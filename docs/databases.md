@@ -2,8 +2,8 @@
 
 ## What It Is
 
-Azure database services store operational, analytical, relational, document, cache, and key-value
-data.
+Azure database services store operational, analytical, relational, document,
+cache, and key-value data.
 
 | Service                       | Best fit                                                        |
 | ----------------------------- | --------------------------------------------------------------- |
@@ -15,16 +15,18 @@ data.
 
 ## When To Use It
 
-- Use Azure SQL for relational systems, transactional consistency, joins, and familiar SQL tooling.
-- Use Cosmos DB when partitioning, latency, global distribution, and flexible schema are core
-  requirements.
+- Use Azure SQL for relational systems, transactional consistency, joins, and
+  familiar SQL tooling.
+- Use Cosmos DB when partitioning, latency, global distribution, and flexible
+  schema are core requirements.
 - Use PostgreSQL when your app expects PostgreSQL features or portability.
 - Use Redis to cache expensive reads or share transient state.
 
 ## When Not To Use It
 
 - Do not choose Cosmos DB to avoid schema design; partition design is critical.
-- Do not put reporting-heavy relational workloads into document storage by default.
+- Do not put reporting-heavy relational workloads into document storage by
+  default.
 - Do not use Redis as the system of record.
 - Do not use Table Storage for complex query patterns.
 
@@ -54,7 +56,8 @@ data.
 ## Cost Considerations
 
 - SQL cost depends on compute tier, storage, backup retention, and replicas.
-- Cosmos DB cost is driven by RU/s or serverless request units, storage, regions, and indexing.
+- Cosmos DB cost is driven by RU/s or serverless request units, storage,
+  regions, and indexing.
 - Redis cost depends heavily on tier and memory size.
 - Over-indexing increases write cost and storage.
 

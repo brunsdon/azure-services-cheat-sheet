@@ -2,8 +2,9 @@
 
 ## What It Is
 
-Azure identity and security services control who can access resources, how workloads authenticate,
-how secrets are stored, and how private enterprise traffic reaches cloud services.
+Azure identity and security services control who can access resources, how
+workloads authenticate, how secrets are stored, and how private enterprise
+traffic reaches cloud services.
 
 | Service            | Best fit                                                        |
 | ------------------ | --------------------------------------------------------------- |
@@ -32,23 +33,28 @@ how secrets are stored, and how private enterprise traffic reaches cloud service
 - Use Entra app registrations for OAuth clients and APIs.
 - Use Azure RBAC for least-privilege access to Azure resources.
 - Use Private Endpoints when traffic must stay on private IP space.
-- Use App Configuration for non-secret environment configuration and feature flags.
+- Use App Configuration for non-secret environment configuration and feature
+  flags.
 
 ## When Not To Use It
 
 - Do not use client secrets where Managed Identity is available.
 - Do not assign broad roles such as Owner or Contributor to app identities.
-- Do not store secrets in source control, pipeline YAML, appsettings, or plain Dataverse
-  configuration.
+- Do not store secrets in source control, pipeline YAML, appsettings, or plain
+  Dataverse configuration.
 - Do not create private endpoints without DNS ownership.
-- Do not treat API Management JWT validation as a replacement for application authorization.
+- Do not treat API Management JWT validation as a replacement for application
+  authorization.
 
 ## Security Mistakes To Avoid
 
 - Reusing one app registration across unrelated integrations.
-- Storing Service Bus connection strings in appsettings instead of using Managed Identity.
-- Granting Contributor to runtime workloads because a narrower data-plane role was not looked up.
-- Creating private endpoints without testing DNS from apps and deployment agents.
+- Storing Service Bus connection strings in appsettings instead of using Managed
+  Identity.
+- Granting Contributor to runtime workloads because a narrower data-plane role
+  was not looked up.
+- Creating private endpoints without testing DNS from apps and deployment
+  agents.
 - Logging tokens, SAS URLs, message bodies, or Key Vault secret values.
 
 ## OAuth 2.0 And App Registration Notes
@@ -109,9 +115,10 @@ flowchart LR
 - Use OAuth 2.0 and Entra ID for APIs.
 - Validate tokens at API Management and authorize in the application.
 - Use Key Vault references or SDK access instead of copied secrets.
-- Avoid logging tokens, connection strings, message bodies, and document contents.
-- Enable diagnostic logs for Key Vault, API Management, Service Bus, and identity-sensitive
-  resources.
+- Avoid logging tokens, connection strings, message bodies, and document
+  contents.
+- Enable diagnostic logs for Key Vault, API Management, Service Bus, and
+  identity-sensitive resources.
 - Use conditional access and privileged identity management for human access.
 
 ## Cost Considerations
@@ -133,8 +140,10 @@ flowchart LR
 ## Production Lessons Learned
 
 - Managed Identity removes secret rotation work, but RBAC still needs ownership.
-- System-assigned identities are easy until a resource is replaced and the object ID changes.
-- Key Vault is not a substitute for configuration design; store only secrets there.
+- System-assigned identities are easy until a resource is replaced and the
+  object ID changes.
+- Key Vault is not a substitute for configuration design; store only secrets
+  there.
 - Private networking is a platform feature, not an application afterthought.
 - Every privileged role assignment should have a reason and an owner.
 

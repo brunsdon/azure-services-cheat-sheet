@@ -2,8 +2,9 @@
 
 ## Problem Statement
 
-An external or internal consumer needs to submit work through an API, but the backend processing is
-slow, failure-prone, or dependent on downstream systems with rate limits.
+An external or internal consumer needs to submit work through an API, but the
+backend processing is slow, failure-prone, or dependent on downstream systems
+with rate limits.
 
 ## When To Use This Pattern
 
@@ -11,6 +12,13 @@ slow, failure-prone, or dependent on downstream systems with rate limits.
 - The caller does not need the final result in the same HTTP request.
 - Downstream systems need protection from traffic spikes.
 - Failed work needs retry, dead-lettering, and replay.
+
+## Avoid When
+
+- The caller genuinely needs an immediate result.
+- The operation is a simple read with no background work.
+- There is no team ownership for DLQ triage.
+- The workflow cannot tolerate duplicate processing.
 
 ## Recommended Azure Services
 
@@ -71,8 +79,9 @@ flowchart LR
 
 ## Cost Profile
 
-Medium. API Management adds baseline cost. Functions and Service Bus are usually cost-effective at
-moderate volume. Logging can become a cost trap if request bodies or verbose traces are captured.
+Medium. API Management adds baseline cost. Functions and Service Bus are usually
+cost-effective at moderate volume. Logging can become a cost trap if request
+bodies or verbose traces are captured.
 
 ## Operational Gotchas
 
@@ -80,6 +89,9 @@ moderate volume. Logging can become a cost trap if request bodies or verbose tra
 - Make message handlers idempotent.
 - Document DLQ replay before production.
 - Avoid unbounded retries against partner systems.
+- Teams often underestimate how much support value comes from a `CorrelationId`
+  returned to the caller.
+- This works well until every downstream error is treated as retryable.
 
 ## Production Readiness Checklist
 

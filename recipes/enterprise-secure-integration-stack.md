@@ -2,8 +2,9 @@
 
 ## Problem Statement
 
-An enterprise integration platform needs secure API exposure, private backend access, durable
-messaging, secret management, observability, and controlled deployment.
+An enterprise integration platform needs secure API exposure, private backend
+access, durable messaging, secret management, observability, and controlled
+deployment.
 
 ## When To Use This Pattern
 
@@ -11,6 +12,13 @@ messaging, secret management, observability, and controlled deployment.
 - Backends must remain private.
 - Integration workloads are business-critical.
 - Operations, audit, and security review are required.
+
+## Avoid When
+
+- The workload is small and does not need enterprise controls yet.
+- The team cannot operate private networking and DNS.
+- API consumers are internal and a lighter boundary is enough.
+- Baseline cost matters more than governance and isolation.
 
 ## Recommended Azure Services
 
@@ -76,9 +84,9 @@ flowchart LR
 
 ## Cost Profile
 
-High compared with startup patterns. API Management, WAF, private networking, Service Bus Premium,
-and Log Analytics all add baseline cost. The trade-off is governance, isolation, security, and
-operational confidence.
+High compared with startup patterns. API Management, WAF, private networking,
+Service Bus Premium, and Log Analytics all add baseline cost. The trade-off is
+governance, isolation, security, and operational confidence.
 
 ## Operational Gotchas
 
@@ -86,6 +94,9 @@ operational confidence.
 - API Management policies can hide backend errors if diagnostics are weak.
 - Premium SKUs need capacity planning.
 - Alerts must map to owners and runbooks.
+- This design buys control, but it also creates fixed cost and platform
+  ownership.
+- The first thing that usually breaks is name resolution, not application code.
 
 ## Production Readiness Checklist
 

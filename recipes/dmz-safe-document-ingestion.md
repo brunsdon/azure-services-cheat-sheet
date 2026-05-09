@@ -2,8 +2,9 @@
 
 ## Problem Statement
 
-External parties need to upload documents, but internal systems should not be directly exposed to
-untrusted files, unknown payloads, or unreliable upload clients.
+External parties need to upload documents, but internal systems should not be
+directly exposed to untrusted files, unknown payloads, or unreliable upload
+clients.
 
 ## When To Use This Pattern
 
@@ -11,6 +12,13 @@ untrusted files, unknown payloads, or unreliable upload clients.
 - Files need validation, malware scanning, classification, or approval.
 - Internal systems must only receive clean, accepted documents.
 - Upload and processing need auditability and replay.
+
+## Avoid When
+
+- The file source is already trusted and inside the same boundary.
+- There is no requirement for validation, scanning, or audit.
+- The team cannot support rejected-file handling.
+- A simpler direct upload is enough and has acceptable risk.
 
 ## Recommended Azure Services
 
@@ -76,7 +84,8 @@ flowchart LR
 
 ## Cost Profile
 
-Medium. Storage is low-cost, but scanning, logging, retention, and private networking can add cost.
+Medium. Storage is low-cost, but scanning, logging, retention, and private
+networking can add cost.
 
 ## Operational Gotchas
 
@@ -84,6 +93,9 @@ Medium. Storage is low-cost, but scanning, logging, retention, and private netwo
 - Large uploads need timeout and retry planning.
 - Rejected file handling must be clear for support teams.
 - Lifecycle policies must respect audit and legal requirements.
+- Teams often underestimate the support process for rejected files.
+- In production, watch for files that pass upload but fail downstream schema or
+  business validation.
 
 ## Production Readiness Checklist
 
