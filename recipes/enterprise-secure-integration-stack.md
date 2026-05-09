@@ -56,7 +56,7 @@ flowchart LR
 | ------------------------- | -------------------------------------------------------------- |
 | Direct public App Service | Weak API governance and exposure boundary.                     |
 | Service Bus Standard      | Often fine, but less isolation for critical workloads.         |
-| AKS                       | Powerful but adds platform operational burden.                 |
+| AKS                       | Useful when Kubernetes control outweighs platform overhead.    |
 | Logic Apps only           | Good for workflows, not a full integration platform by itself. |
 
 ## Security Considerations
